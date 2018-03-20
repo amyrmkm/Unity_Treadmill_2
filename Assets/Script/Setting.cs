@@ -28,7 +28,8 @@ public class Setting : MonoBehaviour
     public Toggle Wavelevel1;
     public Toggle Wavelevel2;
     public Toggle Wavelevel3;
-    public GameObject obstacles;
+    public GameObject scenemanager;
+    private GameObject obstacles;
     public InputField speed;
     public static float treadmillspeed;
     public InputField numbOb;
@@ -36,6 +37,13 @@ public class Setting : MonoBehaviour
     public InputField height;
     public static float obstacleheight;
     public ArrayList heightArray = new ArrayList();
+    public ArrayList widthposArray = new ArrayList();
+    //private GameObject go;
+
+    void Start()
+    {
+        
+    }
 
     public void Setspeed()
     {
@@ -50,44 +58,115 @@ public class Setting : MonoBehaviour
     }
     public void SetHeight()
     {
-        obstacleheight = float.Parse(height.text);
-        PlayerPrefs.SetFloat("ObHeight", obstacleheight);
+        obstacleheight = float.Parse(height.text);        
     }
 
     public void ActiveToggle()
     {
+        
+        // height toggle
         if (Heightlevel1.isOn)
         {
-            obstacles.transform.localScale += new Vector3(0, obstacleheight, 0);
+            PlayerPrefs.SetInt("ObHeight", 1);
+            PlayerPrefs.SetFloat("ObHeightnum", obstacleheight);
         }
         else if (Heightlevel2.isOn)
         {
-            for (int i = 1; i < numbObInput + 1; i++)
-            {
-                float obheights = (Random.Range(obstacleheight - 0.14f - 0.03f, obstacleheight - 0.14f + 0.03f));
-                obstacles.transform.localScale += new Vector3(0, obheights, 0);
-            }
+            PlayerPrefs.SetInt("ObHeight", 2);
+            PlayerPrefs.SetFloat("ObHeightnum", obstacleheight);
         }
         else if (Heightlevel3.isOn)
         {
-            for (int i = 1; i < numbObInput + 1; i++)
-            {
-                float obheights = (Random.Range(obstacleheight - 0.14f - 0.05f, obstacleheight - 0.14f + 0.05f));
-                obstacles.transform.localScale += new Vector3(0, obheights, 0);
-            }
+            PlayerPrefs.SetInt("ObHeight", 3);
+            PlayerPrefs.SetFloat("ObHeightnum", obstacleheight);
         }
 
+        // width toggle
         if (Widthlevel1.isOn)
         {
-            obstacles.transform.localScale -= new Vector3(0, 0, -2f);
+            PlayerPrefs.SetInt("ObWidth", 1);
+            PlayerPrefs.SetFloat("ObWidthVar", 0.8f);
         }
         else if (Widthlevel2.isOn)
         {
-            obstacles.transform.localScale -= new Vector3(0, 0, -1f);
+            PlayerPrefs.SetInt("ObWidth", 2);
+            PlayerPrefs.SetFloat("ObWidthVar", 1.5f);
         }
+
         else if (Widthlevel3.isOn)
         {
-            obstacles.transform.localScale += new Vector3(0, 0, 0);
+            PlayerPrefs.SetInt("ObWidth", 3);
+            PlayerPrefs.SetFloat("ObWidthVar", 3f);
+        }
+
+        // shape toggle
+        if (Shapelevel1.isOn)
+        {
+            PlayerPrefs.SetInt("ObShape", 1);
+        }
+        else if (Shapelevel2.isOn)
+        {
+            PlayerPrefs.SetInt("ObShape", 2);            
+        }
+        else if (Shapelevel3.isOn)
+        {
+            PlayerPrefs.SetInt("ObShape", 3);            
+        }
+
+        // color toggle
+        if (Colorlevel1.isOn)
+        {
+            PlayerPrefs.SetInt("ObColor", 1);
+        }
+        else if (Colorlevel2.isOn)
+        {
+            PlayerPrefs.SetInt("ObColor", 2);
+        }
+        else if (Colorlevel3.isOn)
+        {
+            PlayerPrefs.SetInt("ObColor", 3);
+        }
+
+        // predictability toggle
+        if (Predlevel1.isOn)
+        {
+            PlayerPrefs.SetInt("ObPred", 1);
+        }
+        else if (Predlevel2.isOn)
+        {
+            PlayerPrefs.SetInt("ObPred", 2);
+        }
+        else if (Predlevel3.isOn)
+        {
+            PlayerPrefs.SetInt("ObPred", 3);
+        }
+
+        // negotiation style toggle
+        if (Stylelevel1.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 1);
+        }
+        else if (Stylelevel2.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 2);
+        }
+        else if (Stylelevel3.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 3);
+        }
+
+        // Wave toggle
+        if (Wavelevel1.isOn)
+        {
+            PlayerPrefs.SetInt("ObWave", 1);
+        }
+        else if (Wavelevel2.isOn)
+        {
+            PlayerPrefs.SetInt("ObWave", 2);
+        }
+        else if (Wavelevel3.isOn)
+        {
+            PlayerPrefs.SetInt("ObWave", 3);
         }
     }
 
