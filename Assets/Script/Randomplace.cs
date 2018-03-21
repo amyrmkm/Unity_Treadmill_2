@@ -17,12 +17,11 @@ public class Randomplace : MonoBehaviour {
     private float obwave;
     private float obheights;
     private float obwidthposition;
-
+    private Color altColor = new Color(1f, 1f, 1f, 1);
 
     // Use this for initialization
     void Start () {
-        //ObArray = new ArrayList();
-
+        
         NumberOfObstacles = PlayerPrefs.GetInt("NumbOb");
         obheighttoggle = PlayerPrefs.GetInt("ObHeight");
         obstacleheights = PlayerPrefs.GetFloat("ObHeightnum");
@@ -33,17 +32,6 @@ public class Randomplace : MonoBehaviour {
         obpred = PlayerPrefs.GetInt("ObPred");
         obstyle = PlayerPrefs.GetInt("ObStyle");
         obwave = PlayerPrefs.GetInt("ObWave");
-
-        //for (int i = 1; i < NumberOfObstacles+1; i++)
-        //{
-        //    float position = (Random.Range(-10.0f, -5.1f));
-        //    ObArray.Add(position);
-
-        //Vector3 Obposition = new Vector3(position, 0.01f, 1.37f);
-        //GameObject go = Instantiate(prefab, Obposition, Quaternion.identity) as GameObject;
-        //go.transform.parent = GameObject.Find("Objects").transform;
-
-        //}
 
         // get obstacle height
         if (obheighttoggle == 1)
@@ -72,14 +60,47 @@ public class Randomplace : MonoBehaviour {
         {
             obwidthposition = 1.37f;
         }
-                
-        //float position = (float)ObArray[i] + i*10;
+
+        // get obstacle color
+        if (obcolor == 1)
+        {
+            altColor = altColor;
+            
+        }
+        else if (obcolor == 2)
+        {
+            altColor.r -= (Random.Range(0f, 0.2f));
+            altColor.g -= (Random.Range(0f, 0.2f));
+            altColor.b -= (Random.Range(0f, 0.2f));
+            altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
+        }
+        else if (obcolor == 3)
+        {
+            altColor.r -= (Random.Range(0f, 1f));
+            altColor.g -= (Random.Range(0f, 1f));
+            altColor.b -= (Random.Range(0f, 1f));
+            altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
+        }
+
+        // set position
         float position = (Random.Range(-10.0f, -5.1f)) - 10;
         Vector3 Obposition = new Vector3(position, obheights / 2f, obwidthposition);
+
+        // instantiate obstacles
         GameObject go = Instantiate(prefab, Obposition, Quaternion.identity) as GameObject;
+
+        // change color
+        MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
+        Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
+        newMaterial.color = altColor;
+        gameObjectRenderer.material = newMaterial;
+
+        // change scale
         Vector3 scale = go.transform.localScale;
         scale.Set(0.1f, obheights, obwidthvar);
         go.transform.localScale = scale;
+
+        // put it under the parent object
         go.transform.parent = GameObject.Find("Objects").transform;
 
     }
@@ -89,10 +110,5 @@ public class Randomplace : MonoBehaviour {
     {
         
     }
-
-    //public ArrayList get()
-    //{
-    //    return ObArray;
-    //}
-        
+            
 }

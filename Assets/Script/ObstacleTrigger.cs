@@ -28,8 +28,11 @@ public class ObstacleTrigger : MonoBehaviour {
     private float obwave;
     private float obwidthposition;
     private float obheights;
+    private Color altColor =  new Color(1f, 1f, 1f, 1);
     public ArrayList Obheight = new ArrayList();
     public ArrayList Obwidth = new ArrayList();
+    //public ArrayList Obcolor = new ArrayList();
+    public Color[] Obcolor;
 
     void Start()
     {
@@ -102,7 +105,42 @@ public class ObstacleTrigger : MonoBehaviour {
             }
         }
 
-
+        // obstacle color manipulation
+        Obcolor = new Color[Nums+1];
+        
+        if (obcolor == 1)
+        {
+            for (int i = 1; i < Nums + 1; i++) {                 
+                Obcolor[i] = altColor;
+            }
+        
+        }
+        else if (obcolor == 2)
+        {
+            for (int i = 1; i < Nums + 1; i++)
+            {
+                altColor.r = (Random.Range(0f, 0.2f));
+                altColor.g = (Random.Range(0f, 0.2f));
+                altColor.b = (Random.Range(0f, 0.2f));
+                altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
+                Obcolor[i] = altColor;
+                
+            }
+        }
+        else if (obcolor == 3)
+        {
+            for (int i = 1; i < Nums + 1; i++)
+            {
+                altColor.r = (Random.Range(0f, 1f));
+                altColor.g = (Random.Range(0f, 1f));
+                altColor.b = (Random.Range(0f, 1f));
+                altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
+                Obcolor[i] = altColor;
+                
+            }
+        }
+        
+        
     }
     
     void Update()
@@ -156,14 +194,28 @@ public class ObstacleTrigger : MonoBehaviour {
             if (i < Nums)
             {
                 //float position = (float)obpos[i];
+
+                // assign variables
                 float obheightvariable = (float)Obheight[i];
                 float obwidthvariable = (float)Obwidth[i];
                 float position = (Random.Range(-10.0f, -5.1f));
                 Vector3 Obposition = new Vector3(position, obheightvariable / 2f, obwidthvariable);
+
+                // instantiate obstacles
                 GameObject go = Instantiate(obstacles, Obposition, Quaternion.identity) as GameObject;
+
+                // change color
+                MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
+                Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
+                newMaterial.color = Obcolor[i];
+                gameObjectRenderer.material = newMaterial;
+
+                // scale obstacles
                 Vector3 scale = go.transform.localScale;
                 scale.Set(0.1f, obheightvariable, obwidthvar);
                 go.transform.localScale = scale;
+
+                // put it under the parent object
                 go.transform.parent = GameObject.Find("Objects").transform;
                 i++;
             }
@@ -177,14 +229,29 @@ public class ObstacleTrigger : MonoBehaviour {
 
             if (i < Nums)
             {
+                //float position = (float)obpos[i];
+
+                // assign variables
                 float obheightvariable = (float)Obheight[i];
                 float obwidthvariable = (float)Obwidth[i];
                 float position = (Random.Range(-10.0f, -5.1f));
                 Vector3 Obposition = new Vector3(position, obheightvariable / 2f, obwidthvariable);
+
+                // instantiate obstacles
                 GameObject go = Instantiate(obstacles, Obposition, Quaternion.identity) as GameObject;
+
+                // change color
+                MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
+                Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
+                newMaterial.color = Obcolor[i];
+                gameObjectRenderer.material = newMaterial;
+
+                // scale obstacles
                 Vector3 scale = go.transform.localScale;
                 scale.Set(0.1f, obheightvariable, obwidthvar);
                 go.transform.localScale = scale;
+
+                // put it under the parent object
                 go.transform.parent = GameObject.Find("Objects").transform;
                 i++;
 
