@@ -172,11 +172,12 @@ public class Setting : MonoBehaviour
 
     public void OnSubmit()
     {
-        ActiveToggle();
+        
         Setspeed();
         SetNumber();
         SetHeight();
-        
+        ActiveToggle();
+
     }
 
 }
