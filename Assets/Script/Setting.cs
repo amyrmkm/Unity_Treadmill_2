@@ -13,22 +13,27 @@ public class Setting : MonoBehaviour
     public Toggle Widthlevel1;
     public Toggle Widthlevel2;
     public Toggle Widthlevel3;
-    public Toggle Shapelevel1;
-    public Toggle Shapelevel2;
-    public Toggle Shapelevel3;
+    public Toggle Depthlevel1;
+    public Toggle Depthlevel2;
+    public Toggle Depthlevel3;
     public Toggle Colorlevel1;
     public Toggle Colorlevel2;
     public Toggle Colorlevel3;
-    public Toggle Predlevel1;
-    public Toggle Predlevel2;
-    public Toggle Predlevel3;
+    public Toggle DyPredlevel1;
+    public Toggle DyPredlevel2;
+    public Toggle DyPredlevel3;
+    public Toggle ApPredlevel1;
+    public Toggle ApPredlevel2;
+    public Toggle ApPredlevel3;
     public Toggle Stylelevel1;
     public Toggle Stylelevel2;
     public Toggle Stylelevel3;
-    public Toggle Wavelevel1;
-    public Toggle Wavelevel2;
-    public Toggle Wavelevel3;
-    public GameObject scenemanager;
+    public Toggle Lightinglevel1;
+    public Toggle Lightinglevel2;
+    public Toggle Lightinglevel3;
+    public Toggle Duallevel1;
+    public Toggle Duallevel2;
+    public Toggle Duallevel3;
     private GameObject obstacles;
     public InputField speed;
     public static float treadmillspeed;
@@ -100,17 +105,17 @@ public class Setting : MonoBehaviour
         }
 
         // shape toggle
-        if (Shapelevel1.isOn)
+        if (Depthlevel1.isOn)
         {
-            PlayerPrefs.SetInt("ObShape", 1);
+            PlayerPrefs.SetInt("ObDepth", 1);
         }
-        else if (Shapelevel2.isOn)
+        else if (Depthlevel2.isOn)
         {
-            PlayerPrefs.SetInt("ObShape", 2);            
+            PlayerPrefs.SetInt("ObDepth", 2);            
         }
-        else if (Shapelevel3.isOn)
+        else if (Depthlevel3.isOn)
         {
-            PlayerPrefs.SetInt("ObShape", 3);            
+            PlayerPrefs.SetInt("ObDepth", 3);            
         }
 
         // color toggle
@@ -127,18 +132,32 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObColor", 3);
         }
 
-        // predictability toggle
-        if (Predlevel1.isOn)
+        // dynamic predictability toggle
+        if (DyPredlevel1.isOn)
         {
-            PlayerPrefs.SetInt("ObPred", 1);
+            PlayerPrefs.SetInt("ObDynamicPred", 1);
         }
-        else if (Predlevel2.isOn)
+        else if (DyPredlevel2.isOn)
         {
-            PlayerPrefs.SetInt("ObPred", 2);
+            PlayerPrefs.SetInt("ObDynamicPred", 2);
         }
-        else if (Predlevel3.isOn)
+        else if (DyPredlevel3.isOn)
         {
-            PlayerPrefs.SetInt("ObPred", 3);
+            PlayerPrefs.SetInt("ObDynamicPred", 3);
+        }
+
+        // appearance predictability toggle
+        if (ApPredlevel1.isOn)
+        {
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+        }
+        else if (ApPredlevel2.isOn)
+        {
+            PlayerPrefs.SetInt("ObAppearancePred", 2);
+        }
+        else if (ApPredlevel3.isOn)
+        {
+            PlayerPrefs.SetInt("ObAppearancePred", 3);
         }
 
         // negotiation style toggle
@@ -155,19 +174,34 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObStyle", 3);
         }
 
-        // Wave toggle
-        if (Wavelevel1.isOn)
+        // lighting toggle
+        if (Lightinglevel1.isOn)
         {
-            PlayerPrefs.SetInt("ObWave", 1);
+            PlayerPrefs.SetInt("Lighting", 1);
         }
-        else if (Wavelevel2.isOn)
+        else if (Lightinglevel2.isOn)
         {
-            PlayerPrefs.SetInt("ObWave", 2);
+            PlayerPrefs.SetInt("Lighting", 2);
         }
-        else if (Wavelevel3.isOn)
+        else if (Lightinglevel2.isOn)
         {
-            PlayerPrefs.SetInt("ObWave", 3);
+            PlayerPrefs.SetInt("Lighting", 3);
         }
+
+        // dual task toggle
+        if (Duallevel1.isOn)
+        {
+            PlayerPrefs.SetInt("DualTask", 1);
+        }
+        else if (Duallevel2.isOn)
+        {
+            PlayerPrefs.SetInt("DualTask", 2);
+        }
+        else if (Duallevel2.isOn)
+        {
+            PlayerPrefs.SetInt("DualTask", 3);
+        }
+
     }
 
     public void OnSubmit()

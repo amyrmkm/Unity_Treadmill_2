@@ -11,7 +11,7 @@ public class MoveObject : MonoBehaviour {
 
     void Start()
     {
-        speed = PlayerPrefs.GetFloat("TreadmillInput");
+        speed = PlayerPrefs.GetFloat("TreadmillInput")/2.23694f;
     }
 
     void Update()

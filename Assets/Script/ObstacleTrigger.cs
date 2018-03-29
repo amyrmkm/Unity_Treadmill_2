@@ -23,7 +23,8 @@ public class ObstacleTrigger : MonoBehaviour {
     private float obwidthvar;
     private float obshape;
     private float obcolor;
-    private float obpred;
+    private float obdynamicpred;
+    private float obappearancepred;
     private float obstyle;
     private float obwave;
     private float obwidthposition;
@@ -48,7 +49,8 @@ public class ObstacleTrigger : MonoBehaviour {
         obwidthvar = PlayerPrefs.GetFloat("ObWidthVar");
         obshape = PlayerPrefs.GetInt("ObShape");
         obcolor = PlayerPrefs.GetInt("ObColor");
-        obpred = PlayerPrefs.GetInt("ObPred");
+        obdynamicpred = PlayerPrefs.GetInt("ObDynamicPred");
+        obappearancepred = PlayerPrefs.GetInt("ObAppearancePred");
         obstyle = PlayerPrefs.GetInt("ObStyle");
         obwave = PlayerPrefs.GetInt("ObWave");
         i = 1;
