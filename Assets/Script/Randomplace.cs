@@ -6,16 +6,16 @@ public class Randomplace : MonoBehaviour {
 
     public GameObject prefab;
     public int NumberOfObstacles;    
-    private float obheighttoggle;
+    private int obheighttoggle;
     private float obstacleheights;
-    private float obwidth;
+    private int obwidth;
     private float obwidthvar;
-    private float obdepth;
-    private float obcolor;
-    private float obdynamicpred;
-    private float obappearancepred;
-    private float obstyle;
-    private float obwave;
+    private int obdepth;
+    private int obcolor;
+    private int obdynamicpred;
+    private int obappearancepred;
+    private int obstyle;
+    private int oblight;
     private float obheights;
     private float obheights_target;
     private float obwidthposition;
@@ -24,6 +24,8 @@ public class Randomplace : MonoBehaviour {
     private Color altColor = new Color(1f, 1f, 1f, 1);
     private Color altColor_target = new Color(1f, 1f, 1f, 1);
     private float grayscale;
+    private GameObject lightObject;
+    private Light myLight;
 
 
     // Use this for initialization
@@ -31,7 +33,8 @@ public class Randomplace : MonoBehaviour {
         
         NumberOfObstacles = PlayerPrefs.GetInt("NumbOb");
         obheighttoggle = PlayerPrefs.GetInt("ObHeight");
-        obstacleheights = PlayerPrefs.GetFloat("ObHeightnum");
+        obstacleheights = PlayerPrefs.GetInt("ObHeightnum");
+        obstacleheights = obstacleheights * 0.01f;
         obwidth = PlayerPrefs.GetInt("ObWidth");
         obwidthvar = PlayerPrefs.GetFloat("ObWidthVar");
         obdepth = PlayerPrefs.GetInt("ObDepth");
@@ -39,7 +42,10 @@ public class Randomplace : MonoBehaviour {
         obdynamicpred = PlayerPrefs.GetInt("ObDynamicPred");
         obappearancepred = PlayerPrefs.GetInt("ObAppearancePred");
         obstyle = PlayerPrefs.GetInt("ObStyle");
-        obwave = PlayerPrefs.GetInt("ObWave");
+        oblight = PlayerPrefs.GetInt("Lighting");
+        lightObject = GameObject.Find("Directional light");
+        Debug.Log(lightObject);
+        myLight = lightObject.GetComponent<Light>();
 
         // get obstacle negotiation style
         if (obstyle == 1)
@@ -81,22 +87,7 @@ public class Randomplace : MonoBehaviour {
                 altColor.b -= (Random.Range(0f, 1f));
                 altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
             }
-
-            // get obstacle wave position
-            if (obwave == 1)
-            {
-                
-            }
-            else if (obwave == 2)
-            {
-                obheights = (Random.Range(obstacleheights - 0.03f, obstacleheights + 0.03f));
-            }
-            else if (obwave == 3)
-            {
-                obheights = (Random.Range(obstacleheights - 0.05f, obstacleheights + 0.05f));
-            }
-
-            
+ 
         }
 
         else if (obstyle == 2)
@@ -169,7 +160,21 @@ public class Randomplace : MonoBehaviour {
         {
             obwidthposition = 1.37f;
         }
-        
+
+        // get lighting position
+        if (oblight == 1)
+        {
+            myLight.enabled = true;
+        }
+        else if (oblight == 2)
+        {
+            myLight.enabled = false;
+        }
+        else if (oblight == 3)
+        {
+            myLight.enabled = false;
+        }
+
         // set position
         float position = (Random.Range(-10.0f, -5.1f)) - 10;
         Vector3 Obposition = new Vector3(position, obheights / 2f, obwidthposition);

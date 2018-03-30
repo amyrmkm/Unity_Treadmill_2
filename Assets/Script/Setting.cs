@@ -7,6 +7,7 @@ public class Setting : MonoBehaviour
 {
 
     // toggle game objects
+    
     public Toggle Heightlevel1;
     public Toggle Heightlevel2;
     public Toggle Heightlevel3;
@@ -39,8 +40,8 @@ public class Setting : MonoBehaviour
     public static float treadmillspeed;
     public InputField numbOb;
     public static int numbObInput;
-    public InputField height;
-    public static float obstacleheight;
+    public Slider Heightval;
+    public static int Heightvalint;
     public ArrayList heightArray = new ArrayList();
     public ArrayList widthposArray = new ArrayList();
     //private GameObject go;
@@ -63,7 +64,7 @@ public class Setting : MonoBehaviour
     }
     public void SetHeight()
     {
-        obstacleheight = float.Parse(height.text);        
+        Heightvalint = (int)Heightval.value;
     }
 
     public void ActiveToggle()
@@ -73,17 +74,17 @@ public class Setting : MonoBehaviour
         if (Heightlevel1.isOn)
         {
             PlayerPrefs.SetInt("ObHeight", 1);
-            PlayerPrefs.SetFloat("ObHeightnum", obstacleheight);
+            PlayerPrefs.SetInt("ObHeightnum", Heightvalint);
         }
         else if (Heightlevel2.isOn)
         {
             PlayerPrefs.SetInt("ObHeight", 2);
-            PlayerPrefs.SetFloat("ObHeightnum", obstacleheight);
+            PlayerPrefs.SetInt("ObHeightnum", Heightvalint);
         }
         else if (Heightlevel3.isOn)
         {
             PlayerPrefs.SetInt("ObHeight", 3);
-            PlayerPrefs.SetFloat("ObHeightnum", obstacleheight);
+            PlayerPrefs.SetInt("ObHeightnum", Heightvalint);
         }
 
         // width toggle
