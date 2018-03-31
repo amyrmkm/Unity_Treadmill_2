@@ -12,9 +12,11 @@ public class ObstacleTrigger : MonoBehaviour {
     private Randomplace randpl;
     //private ArrayList obpos;
     private GameObject obstacles;
+    private GameObject targets;
     private int Nums;
     private GameObject go;
     static int touched_child = 0;
+    static int touched_child_target = 0;
     static bool played_sound = false;
     private int i;
     private float obstacleheights;
@@ -34,6 +36,14 @@ public class ObstacleTrigger : MonoBehaviour {
     public ArrayList Obwidth = new ArrayList();
     //public ArrayList Obcolor = new ArrayList();
     public Color[] Obcolor;
+    private float grayscale;
+    private Color altColor_target = new Color(1f, 1f, 1f, 1);
+    private int obdepth;
+    private float obdepths;
+    private float obdepths_target;
+    private float obheights_target;
+    private int timer;
+    
 
     void Start()
     {
@@ -42,43 +52,161 @@ public class ObstacleTrigger : MonoBehaviour {
 
         //obpos = randpl.get();
         obstacles = randpl.prefab;
+        targets = randpl.target;
         Nums = randpl.NumberOfObstacles;
         obheighttoggle = PlayerPrefs.GetInt("ObHeight");
-        obstacleheights = PlayerPrefs.GetFloat("ObHeightnum");
+        obstacleheights = PlayerPrefs.GetInt("ObHeightnum");
+        obstacleheights = obstacleheights * 0.01f;
         obwidth = PlayerPrefs.GetInt("ObWidth");
         obwidthvar = PlayerPrefs.GetFloat("ObWidthVar");
-        obshape = PlayerPrefs.GetInt("ObShape");
+        obdepth = PlayerPrefs.GetInt("ObDepth");
         obcolor = PlayerPrefs.GetInt("ObColor");
         obdynamicpred = PlayerPrefs.GetInt("ObDynamicPred");
         obappearancepred = PlayerPrefs.GetInt("ObAppearancePred");
         obstyle = PlayerPrefs.GetInt("ObStyle");
-        obwave = PlayerPrefs.GetInt("ObWave");
+        
         i = 1;
 
-        // obstacle height manipulation
-        if (obheighttoggle == 1)
+        if (obstyle == 1)
         {
-            for (int i = 1; i < Nums + 1; i++)
+            obdepths = 0.1f;
+
+            // obstacle height manipulation
+            if (obheighttoggle == 1)
             {
-                obheights = PlayerPrefs.GetFloat("ObHeightnum");
-                Obheight.Add(obheights);
+                for (int i = 1; i < Nums + 1; i++)
+                {
+                    obheights = PlayerPrefs.GetFloat("ObHeightnum");
+                    Obheight.Add(obheights);
+                }
             }
+            else if (obheighttoggle == 2)
+            {
+                for (int i = 1; i < Nums + 1; i++)
+                {
+                    obheights = (Random.Range(obstacleheights - 0.03f, obstacleheights + 0.03f));
+                    Obheight.Add(obheights);
+                }
+            }
+            else if (obheighttoggle == 3)
+            {
+                for (int i = 1; i < Nums + 1; i++)
+                {
+                    obheights = (Random.Range(obstacleheights - 0.05f, obstacleheights + 0.05f));
+                    Obheight.Add(obheights);
+                }
+            }
+            
+            // obstacle color manipulation
+            Obcolor = new Color[Nums + 1];
+
+            if (obcolor == 1)
+            {
+                for (int i = 1; i < Nums + 1; i++)
+                {
+                    Obcolor[i] = altColor;
+                }
+
+            }
+            else if (obcolor == 2)
+            {
+                for (int i = 1; i < Nums + 1; i++)
+                {
+                    grayscale = Random.Range(0f, 1f);
+                    altColor.r -= grayscale;
+                    altColor.g -= grayscale;
+                    altColor.b -= grayscale;
+                    altColor = new Color(altColor.r, altColor.g, altColor.b, 1);                    
+                    Obcolor[i] = altColor;
+
+                }
+            }
+            else if (obcolor == 3)
+            {
+                for (int i = 1; i < Nums + 1; i++)
+                {
+                    altColor.r = (Random.Range(0f, 1f));
+                    altColor.g = (Random.Range(0f, 1f));
+                    altColor.b = (Random.Range(0f, 1f));
+                    altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
+                    Obcolor[i] = altColor;
+
+                }
+            }        
         }
-        else if (obheighttoggle == 2)
+
+        else if (obstyle == 2)
         {
+            obheights = 0.01f;
+            Obcolor = new Color[Nums + 1];
+
             for (int i = 1; i < Nums + 1; i++)
             {
-                obheights = (Random.Range(obstacleheights - 0.03f, obstacleheights + 0.03f));
-                Obheight.Add(obheights);
+                Obcolor[i] = altColor_target;
+            }            
+
+            if (obdepth == 1)
+            {
+                obdepths_target = 0.5f;
             }
+            else if (obdepth == 2)
+            {
+                obdepths_target = 0.3f;
+            }
+            else if (obdepth == 3)
+            {
+                obdepths_target = 0.1f;
+            }
+
         }
-        else if (obheighttoggle == 3)
+
+        else if (obstyle == 3)
         {
-            for (int i = 1; i < Nums + 1; i++)
+            obheights_target = 0.01f;
+            obdepths = 0.1f;
+            altColor = new Color(1, 0, 0, 1);
+            altColor_target = altColor_target;
+
+            // obstacle height manipulation
+            if (obheighttoggle == 1)
             {
-                obheights = (Random.Range(obstacleheights - 0.05f, obstacleheights + 0.05f));
-                Obheight.Add(obheights);
+                for (int i = 1; i < Nums + 1; i++)
+                {
+                    obheights = PlayerPrefs.GetFloat("ObHeightnum");
+                    Obheight.Add(obheights);
+                }
             }
+            else if (obheighttoggle == 2)
+            {
+                for (int i = 1; i < Nums + 1; i++)
+                {
+                    obheights = (Random.Range(obstacleheights - 0.03f, obstacleheights + 0.03f));
+                    Obheight.Add(obheights);
+                }
+            }
+            else if (obheighttoggle == 3)
+            {
+                for (int i = 1; i < Nums + 1; i++)
+                {
+                    obheights = (Random.Range(obstacleheights - 0.05f, obstacleheights + 0.05f));
+                    Obheight.Add(obheights);
+                }
+            }
+
+            // get obstacle depth
+            if (obdepth == 1)
+            {
+                obdepths_target = 0.5f;
+            }
+            else if (obdepth == 2)
+            {
+                obdepths_target = 0.3f;
+            }
+            else if (obdepth == 3)
+            {
+                obdepths_target = 0.1f;
+            }
+
         }
 
         // obstacle width manipulation
@@ -107,47 +235,27 @@ public class ObstacleTrigger : MonoBehaviour {
             }
         }
 
-        // obstacle color manipulation
-        Obcolor = new Color[Nums+1];
-        
-        if (obcolor == 1)
+        // appearance predictability
+        if (obappearancepred == 1)
         {
-            for (int i = 1; i < Nums + 1; i++) {                 
-                Obcolor[i] = altColor;
-            }
-        
+            timer = 0;
         }
-        else if (obcolor == 2)
+
+        else if (obappearancepred == 2)
         {
-            for (int i = 1; i < Nums + 1; i++)
-            {
-                altColor.r = (Random.Range(0f, 0.2f));
-                altColor.g = (Random.Range(0f, 0.2f));
-                altColor.b = (Random.Range(0f, 0.2f));
-                altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
-                Obcolor[i] = altColor;
-                
-            }
+            timer = 3;
         }
-        else if (obcolor == 3)
+
+        else if (obappearancepred == 3)
         {
-            for (int i = 1; i < Nums + 1; i++)
-            {
-                altColor.r = (Random.Range(0f, 1f));
-                altColor.g = (Random.Range(0f, 1f));
-                altColor.b = (Random.Range(0f, 1f));
-                altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
-                Obcolor[i] = altColor;
-                
-            }
+            timer = 3;
         }
-        
-        
+
     }
     
     void Update()
     {
-
+        
     }
     
     void OnTriggerEnter(Collider other)
@@ -168,21 +276,46 @@ public class ObstacleTrigger : MonoBehaviour {
             touched_child += 1;
             
         }
+
+        if (other.tag == "target")
+        {
+            audioSource.clip = SuccessClip;
+            if (played_sound == false)
+            {
+                audioSource.Play();
+                played_sound = true;
+            }
+            Score++;
+        }
+
+        if (other.tag == "indicator_target")
+        {
+            touched_child_target += 1;
+        }
+
     }
 
     void OnTriggerExit(Collider other)
     {
-       // Debug.Log("Exit " + other.gameObject);
+       
         if (other.tag == "obstacle")
         {
             Destroy(other.gameObject, 2.0f);
-            //Debug.Log("HI");
+        }
+
+        if (other.tag == "target")
+        {
+            Destroy(other.gameObject, 2.0f);
         }
 
         if (other.tag == "indicator")
         {
             Destroy(other.gameObject, 2.0f);
-            //Debug.Log("HI");
+        }
+
+        if (other.tag == "indicator_target")
+        {
+            Destroy(other.gameObject, 2.0f);
         }
 
         if (touched_child >= 2 && played_sound == false)
@@ -204,6 +337,7 @@ public class ObstacleTrigger : MonoBehaviour {
                 Vector3 Obposition = new Vector3(position, obheightvariable / 2f, obwidthvariable);
 
                 // instantiate obstacles
+                
                 GameObject go = Instantiate(obstacles, Obposition, Quaternion.identity) as GameObject;
 
                 // change color
@@ -214,12 +348,13 @@ public class ObstacleTrigger : MonoBehaviour {
 
                 // scale obstacles
                 Vector3 scale = go.transform.localScale;
-                scale.Set(0.1f, obheightvariable, obwidthvar);
+                scale.Set(obdepths, obheightvariable, obwidthvar);
                 go.transform.localScale = scale;
 
                 // put it under the parent object
                 go.transform.parent = GameObject.Find("Objects").transform;
                 i++;
+                
             }
 
         }
@@ -260,6 +395,80 @@ public class ObstacleTrigger : MonoBehaviour {
             }
         }
 
-        
+        if (touched_child_target >= 2 && played_sound == false)
+        {
+            audioSource.clip = failedClip;
+            audioSource.Play();
+            
+
+            touched_child_target = 0;
+
+            if (i < Nums)
+            {
+                //float position = (float)obpos[i];
+
+                // assign variables
+                float obwidthvariable = (float)Obwidth[i];
+                float position = (Random.Range(-10.0f, -5.1f));
+                Vector3 Obposition = new Vector3(position, 0.01f, obwidthvariable);
+
+                // instantiate obstacles
+
+                GameObject go = Instantiate(targets, Obposition, Quaternion.identity) as GameObject;
+
+                // change color
+                MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
+                Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
+                newMaterial.color = Obcolor[i];
+                gameObjectRenderer.material = newMaterial;
+
+                // scale obstacles
+                Vector3 scale = go.transform.localScale;
+                scale.Set(obdepths_target, 0.02f, obwidthvar);
+                go.transform.localScale = scale;
+
+                // put it under the parent object
+                go.transform.parent = GameObject.Find("Objects").transform;
+                i++;
+
+            }
+
+        }
+
+        if (touched_child_target >= 2 && played_sound == true)
+        {
+            played_sound = false;
+            touched_child_target = 0;
+
+            if (i < Nums)
+            {
+                //float position = (float)obpos[i];
+
+                // assign variables                
+                float obwidthvariable = (float)Obwidth[i];
+                float position = (Random.Range(-10.0f, -5.1f));
+                Vector3 Obposition = new Vector3(position, 0.01f, obwidthvariable);
+
+                // instantiate obstacles
+                GameObject go = Instantiate(targets, Obposition, Quaternion.identity) as GameObject;
+
+                // change color
+                MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
+                Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
+                newMaterial.color = Obcolor[i];
+                gameObjectRenderer.material = newMaterial;
+
+                // scale obstacles
+                Vector3 scale = go.transform.localScale;
+                scale.Set(obdepths_target, 0.02f, obwidthvar);
+                go.transform.localScale = scale;
+
+                // put it under the parent object
+                go.transform.parent = GameObject.Find("Objects").transform;
+                i++;
+
+            }
+        }
+
     }
 }

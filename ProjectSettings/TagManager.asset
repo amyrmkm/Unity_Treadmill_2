@@ -10,6 +10,9 @@ TagManager:
   - obstacle
   - indicator
   - projectile
+  - hospital
+  - target
+  - indicator_target
   layers:
   - Default
   - TransparentFX
