@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Setting : MonoBehaviour
 {
@@ -203,16 +204,158 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("DualTask", 3);
         }
 
+    }   
+
+    public void Easy(int sceneName)
+    {
+        treadmillspeed = float.Parse(speed.text);
+        numbObInput = int.Parse(numbOb.text);
+        PlayerPrefs.SetFloat("TreadmillInput", treadmillspeed);
+        PlayerPrefs.SetInt("NumbOb", numbObInput);
+        PlayerPrefs.SetFloat("ObWidthVar", 0.8f);
+        PlayerPrefs.SetInt("ObWidth", 1);
+
+        // negotiation style toggle
+        if (Stylelevel1.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 1);            
+            Heightvalint = 12;
+            PlayerPrefs.SetInt("ObHeight", 1);
+            PlayerPrefs.SetInt("ObHeightnum", Heightvalint);                        
+            PlayerPrefs.SetInt("ObColor", 1);
+            PlayerPrefs.SetInt("ObDynamicPred", 1);
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("Lighting", 1);
+            PlayerPrefs.SetInt("DualTask", 1);
+        }
+        else if (Stylelevel2.isOn)
+        {            
+            PlayerPrefs.SetInt("ObStyle", 2);
+            PlayerPrefs.SetInt("ObColor", 1);
+            PlayerPrefs.SetInt("ObDynamicPred", 1);
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("Lighting", 1);
+            PlayerPrefs.SetInt("DualTask", 1);
+            PlayerPrefs.SetInt("ObDepth", 1);
+        }
+        else if (Stylelevel3.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 3);
+            Heightvalint = 12;
+            PlayerPrefs.SetInt("ObHeight", 1);
+            PlayerPrefs.SetInt("ObHeightnum", Heightvalint);            
+            PlayerPrefs.SetInt("ObDynamicPred", 1);
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("Lighting", 1);
+            PlayerPrefs.SetInt("DualTask", 1);
+            PlayerPrefs.SetInt("ObDepth", 1);
+        }
+
+        SceneManager.LoadScene(sceneName);
     }
 
-    public void OnSubmit()
+    public void Medium(int sceneName)
+    {
+        treadmillspeed = float.Parse(speed.text);
+        numbObInput = int.Parse(numbOb.text);
+        PlayerPrefs.SetFloat("TreadmillInput", treadmillspeed);
+        PlayerPrefs.SetInt("NumbOb", numbObInput);
+        PlayerPrefs.SetFloat("ObWidthVar", 1.5f);
+        PlayerPrefs.SetInt("ObWidth", 1);
+
+        // negotiation style toggle
+        if (Stylelevel1.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 1);            
+            Heightvalint = 12;
+            PlayerPrefs.SetInt("ObHeight", 2);
+            PlayerPrefs.SetInt("ObHeightnum", Heightvalint);
+            PlayerPrefs.SetInt("ObColor", 3);
+            PlayerPrefs.SetInt("ObDynamicPred", 2);
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("Lighting", 1);
+            PlayerPrefs.SetInt("DualTask", 2);
+
+        }
+        else if (Stylelevel2.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 2);
+            PlayerPrefs.SetInt("ObColor", 3);
+            PlayerPrefs.SetInt("ObDynamicPred", 2);
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("Lighting", 1);
+            PlayerPrefs.SetInt("DualTask", 2);
+            PlayerPrefs.SetInt("ObDepth", 2);
+        }
+        else if (Stylelevel3.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 3);
+            Heightvalint = 12;
+            PlayerPrefs.SetInt("ObHeight", 2);
+            PlayerPrefs.SetInt("ObHeightnum", Heightvalint);            
+            PlayerPrefs.SetInt("ObDynamicPred", 2);
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("Lighting", 1);
+            PlayerPrefs.SetInt("DualTask", 2);
+            PlayerPrefs.SetInt("ObDepth", 2);
+        }
+    }
+
+    public void Hard(int sceneName)
+    {
+        treadmillspeed = float.Parse(speed.text);
+        numbObInput = int.Parse(numbOb.text);
+        PlayerPrefs.SetFloat("TreadmillInput", treadmillspeed);
+        PlayerPrefs.SetInt("NumbOb", numbObInput);
+        PlayerPrefs.SetFloat("ObWidthVar", 1.5f);
+        PlayerPrefs.SetInt("ObWidth", 1);
+
+        // negotiation style toggle
+        if (Stylelevel1.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 1);
+            Heightvalint = 18;
+            PlayerPrefs.SetInt("ObHeight", 3);
+            PlayerPrefs.SetInt("ObHeightnum", Heightvalint);
+            PlayerPrefs.SetInt("ObColor", 3);
+            PlayerPrefs.SetInt("ObDynamicPred", 3);
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("Lighting", 2);
+            PlayerPrefs.SetInt("DualTask", 3);
+        }
+        else if (Stylelevel2.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 2);
+            PlayerPrefs.SetInt("ObColor", 3);
+            PlayerPrefs.SetInt("ObDynamicPred", 3);
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("Lighting", 1);
+            PlayerPrefs.SetInt("DualTask", 2);
+            PlayerPrefs.SetInt("ObDepth", 3);
+        }
+        else if (Stylelevel3.isOn)
+        {
+            PlayerPrefs.SetInt("ObStyle", 3);
+            Heightvalint = 18;
+            PlayerPrefs.SetInt("ObHeight", 3);
+            PlayerPrefs.SetInt("ObHeightnum", Heightvalint);
+            PlayerPrefs.SetInt("ObColor", 3);
+            PlayerPrefs.SetInt("ObDynamicPred", 3);
+            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("Lighting", 2);
+            PlayerPrefs.SetInt("DualTask", 3);
+            PlayerPrefs.SetInt("ObDepth", 3);
+        }
+    }
+
+    public void OnSubmit(int sceneName)
     {
         
         Setspeed();
         SetNumber();
         SetHeight();
         ActiveToggle();
-
+        SceneManager.LoadScene(sceneName);
     }
 
 }

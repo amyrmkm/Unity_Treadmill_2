@@ -450,8 +450,9 @@ public class ObstacleTrigger : MonoBehaviour {
                 Vector3 Obposition = new Vector3(position, 0.01f, obwidthvariable);
 
                 // instantiate obstacles
+                StartCoroutine(PlaceObstacle(3.0f));
                 GameObject go = Instantiate(targets, Obposition, Quaternion.identity) as GameObject;
-
+                
                 // change color
                 MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
                 Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
@@ -470,5 +471,11 @@ public class ObstacleTrigger : MonoBehaviour {
             }
         }
 
+    }
+
+    IEnumerator PlaceObstacle(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        
     }
 }
