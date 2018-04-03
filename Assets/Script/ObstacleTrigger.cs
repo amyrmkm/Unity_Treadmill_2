@@ -42,7 +42,9 @@ public class ObstacleTrigger : MonoBehaviour {
     private float obdepths;
     private float obdepths_target;
     private float obheights_target;
-    private int timer;
+    private float timer;
+    private float timer_destroy;
+    public float speed;
     
 
     void Start()
@@ -64,7 +66,8 @@ public class ObstacleTrigger : MonoBehaviour {
         obdynamicpred = PlayerPrefs.GetInt("ObDynamicPred");
         obappearancepred = PlayerPrefs.GetInt("ObAppearancePred");
         obstyle = PlayerPrefs.GetInt("ObStyle");
-        
+        speed = PlayerPrefs.GetFloat("TreadmillInput") / 2.23694f;
+
         i = 1;
 
         if (obstyle == 1)
@@ -76,7 +79,7 @@ public class ObstacleTrigger : MonoBehaviour {
             {
                 for (int i = 1; i < Nums + 1; i++)
                 {
-                    obheights = PlayerPrefs.GetFloat("ObHeightnum");
+                    obheights = obstacleheights;
                     Obheight.Add(obheights);
                 }
             }
@@ -172,7 +175,7 @@ public class ObstacleTrigger : MonoBehaviour {
             {
                 for (int i = 1; i < Nums + 1; i++)
                 {
-                    obheights = PlayerPrefs.GetFloat("ObHeightnum");
+                    obheights = obstacleheights;
                     Obheight.Add(obheights);
                 }
             }
@@ -192,7 +195,7 @@ public class ObstacleTrigger : MonoBehaviour {
                     Obheight.Add(obheights);
                 }
             }
-
+                        
             // get obstacle depth
             if (obdepth == 1)
             {
@@ -238,17 +241,18 @@ public class ObstacleTrigger : MonoBehaviour {
         // appearance predictability
         if (obappearancepred == 1)
         {
-            timer = 0;
+            timer = 0.0f;
         }
 
         else if (obappearancepred == 2)
         {
-            timer = 3;
+            timer = speed * (4f / speed);
         }
 
         else if (obappearancepred == 3)
         {
-            timer = 3;
+            timer = 0f;
+            timer_destroy = speed * (4f / speed);
         }
 
     }
@@ -323,75 +327,31 @@ public class ObstacleTrigger : MonoBehaviour {
             audioSource.clip = SuccessClip;
             audioSource.Play();
             Score++;
-
             touched_child = 0;
 
-            if (i < Nums)
+            if (obappearancepred == 1 | obappearancepred == 2)
             {
-                //float position = (float)obpos[i];
-
-                // assign variables
-                float obheightvariable = (float)Obheight[i];
-                float obwidthvariable = (float)Obwidth[i];
-                float position = (Random.Range(-10.0f, -5.1f));
-                Vector3 Obposition = new Vector3(position, obheightvariable / 2f, obwidthvariable);
-
-                // instantiate obstacles
-                
-                GameObject go = Instantiate(obstacles, Obposition, Quaternion.identity) as GameObject;
-
-                // change color
-                MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
-                Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
-                newMaterial.color = Obcolor[i];
-                gameObjectRenderer.material = newMaterial;
-
-                // scale obstacles
-                Vector3 scale = go.transform.localScale;
-                scale.Set(obdepths, obheightvariable, obwidthvar);
-                go.transform.localScale = scale;
-
-                // put it under the parent object
-                go.transform.parent = GameObject.Find("Objects").transform;
-                i++;
-                
+                StartCoroutine(PlaceObstacle(timer));
             }
-
+            else if (obappearancepred == 3)
+            {
+                StartCoroutine(PlaceObstacle(timer));
+                StartCoroutine(PlaceObstacle_disable(timer_destroy));
+            }
         }
 
         if (touched_child >= 2 && played_sound == true)
         {
             played_sound = false;
             touched_child = 0;
-
-            if (i < Nums)
+            if (obappearancepred == 1 | obappearancepred == 2)
             {
-                //float position = (float)obpos[i];
-
-                // assign variables
-                float obheightvariable = (float)Obheight[i];
-                float obwidthvariable = (float)Obwidth[i];
-                float position = (Random.Range(-10.0f, -5.1f));
-                Vector3 Obposition = new Vector3(position, obheightvariable / 2f, obwidthvariable);
-
-                // instantiate obstacles
-                GameObject go = Instantiate(obstacles, Obposition, Quaternion.identity) as GameObject;
-
-                // change color
-                MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
-                Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
-                newMaterial.color = Obcolor[i];
-                gameObjectRenderer.material = newMaterial;
-
-                // scale obstacles
-                Vector3 scale = go.transform.localScale;
-                scale.Set(0.1f, obheightvariable, obwidthvar);
-                go.transform.localScale = scale;
-
-                // put it under the parent object
-                go.transform.parent = GameObject.Find("Objects").transform;
-                i++;
-
+                StartCoroutine(PlaceObstacle(timer));
+            }
+            else if (obappearancepred == 3)
+            {
+                StartCoroutine(PlaceObstacle(timer));
+                StartCoroutine(PlaceObstacle_disable(timer_destroy));
             }
         }
 
@@ -399,39 +359,8 @@ public class ObstacleTrigger : MonoBehaviour {
         {
             audioSource.clip = failedClip;
             audioSource.Play();
-            
-
             touched_child_target = 0;
-
-            if (i < Nums)
-            {
-                //float position = (float)obpos[i];
-
-                // assign variables
-                float obwidthvariable = (float)Obwidth[i];
-                float position = (Random.Range(-10.0f, -5.1f));
-                Vector3 Obposition = new Vector3(position, 0.01f, obwidthvariable);
-
-                // instantiate obstacles
-
-                GameObject go = Instantiate(targets, Obposition, Quaternion.identity) as GameObject;
-
-                // change color
-                MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
-                Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
-                newMaterial.color = Obcolor[i];
-                gameObjectRenderer.material = newMaterial;
-
-                // scale obstacles
-                Vector3 scale = go.transform.localScale;
-                scale.Set(obdepths_target, 0.02f, obwidthvar);
-                go.transform.localScale = scale;
-
-                // put it under the parent object
-                go.transform.parent = GameObject.Find("Objects").transform;
-                i++;
-
-            }
+            StartCoroutine(PlaceTarget(timer));
 
         }
 
@@ -439,36 +368,7 @@ public class ObstacleTrigger : MonoBehaviour {
         {
             played_sound = false;
             touched_child_target = 0;
-
-            if (i < Nums)
-            {
-                //float position = (float)obpos[i];
-
-                // assign variables                
-                float obwidthvariable = (float)Obwidth[i];
-                float position = (Random.Range(-10.0f, -5.1f));
-                Vector3 Obposition = new Vector3(position, 0.01f, obwidthvariable);
-
-                // instantiate obstacles
-                StartCoroutine(PlaceObstacle(3.0f));
-                GameObject go = Instantiate(targets, Obposition, Quaternion.identity) as GameObject;
-                
-                // change color
-                MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
-                Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
-                newMaterial.color = Obcolor[i];
-                gameObjectRenderer.material = newMaterial;
-
-                // scale obstacles
-                Vector3 scale = go.transform.localScale;
-                scale.Set(obdepths_target, 0.02f, obwidthvar);
-                go.transform.localScale = scale;
-
-                // put it under the parent object
-                go.transform.parent = GameObject.Find("Objects").transform;
-                i++;
-
-            }
+            StartCoroutine(PlaceTarget(timer));
         }
 
     }
@@ -476,6 +376,74 @@ public class ObstacleTrigger : MonoBehaviour {
     IEnumerator PlaceObstacle(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        
+        if (i < Nums)
+        {
+            //float position = (float)obpos[i];
+
+            // assign variables
+            float obheightvariable = (float)Obheight[i];
+            float obwidthvariable = (float)Obwidth[i];
+            float position = (Random.Range(-10.0f, -5.1f));
+            Vector3 Obposition = new Vector3(position, obheightvariable / 2f, obwidthvariable);
+
+            // instantiate obstacles
+            
+            GameObject go = Instantiate(obstacles, Obposition, Quaternion.identity) as GameObject;
+
+            // change color
+            MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
+            Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
+            newMaterial.color = Obcolor[i];
+            gameObjectRenderer.material = newMaterial;
+
+            // scale obstacles
+            Vector3 scale = go.transform.localScale;
+            scale.Set(0.1f, obheightvariable, obwidthvar);
+            go.transform.localScale = scale;
+
+            // put it under the parent object
+            go.transform.parent = GameObject.Find("Objects").transform;
+            i++;
+
+        }
+    }
+
+    IEnumerator PlaceObstacle_disable(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        go.GetComponent<MeshRenderer>().enabled = false; // not working
+    }
+
+    IEnumerator PlaceTarget(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        if (i < Nums)
+        {
+            //float position = (float)obpos[i];
+
+            // assign variables                
+            float obwidthvariable = (float)Obwidth[i];
+            float position = (Random.Range(-10.0f, -5.1f));
+            Vector3 Obposition = new Vector3(position, 0.02f / 2, obwidthvariable);
+
+            // instantiate obstacles                
+            GameObject go = Instantiate(targets, Obposition, Quaternion.identity) as GameObject;
+
+            // change color
+            MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
+            Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
+            newMaterial.color = Obcolor[i];
+            gameObjectRenderer.material = newMaterial;
+
+            // scale obstacles
+            Vector3 scale = go.transform.localScale;
+            scale.Set(obdepths_target, 0.02f, obwidthvar);
+            go.transform.localScale = scale;
+
+            // put it under the parent object
+            go.transform.parent = GameObject.Find("Objects").transform;
+            i++;
+
+        }
     }
 }

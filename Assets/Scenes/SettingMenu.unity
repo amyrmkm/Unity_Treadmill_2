@@ -1590,8 +1590,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 282803588}
-        m_MethodName: LoadSetting
+      - m_Target: {fileID: 1257228412}
+        m_MethodName: OnSubmit
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -318,8 +318,8 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObHeight", 3);
             PlayerPrefs.SetInt("ObHeightnum", Heightvalint);
             PlayerPrefs.SetInt("ObColor", 3);
-            PlayerPrefs.SetInt("ObDynamicPred", 3);
-            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("ObDynamicPred", 1);
+            PlayerPrefs.SetInt("ObAppearancePred", 3);
             PlayerPrefs.SetInt("Lighting", 2);
             PlayerPrefs.SetInt("DualTask", 3);
         }
@@ -327,8 +327,8 @@ public class Setting : MonoBehaviour
         {
             PlayerPrefs.SetInt("ObStyle", 2);
             PlayerPrefs.SetInt("ObColor", 3);
-            PlayerPrefs.SetInt("ObDynamicPred", 3);
-            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("ObDynamicPred", 1);
+            PlayerPrefs.SetInt("ObAppearancePred", 3);
             PlayerPrefs.SetInt("Lighting", 1);
             PlayerPrefs.SetInt("DualTask", 2);
             PlayerPrefs.SetInt("ObDepth", 3);
@@ -340,8 +340,8 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObHeight", 3);
             PlayerPrefs.SetInt("ObHeightnum", Heightvalint);
             PlayerPrefs.SetInt("ObColor", 3);
-            PlayerPrefs.SetInt("ObDynamicPred", 3);
-            PlayerPrefs.SetInt("ObAppearancePred", 1);
+            PlayerPrefs.SetInt("ObDynamicPred", 1);
+            PlayerPrefs.SetInt("ObAppearancePred", 3);
             PlayerPrefs.SetInt("Lighting", 2);
             PlayerPrefs.SetInt("DualTask", 3);
             PlayerPrefs.SetInt("ObDepth", 3);

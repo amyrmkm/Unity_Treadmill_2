@@ -189,7 +189,7 @@ public class Randomplace : MonoBehaviour {
 
             // set position
             float position = (Random.Range(-10.0f, -5.1f)) - 10;
-            Vector3 Obposition = new Vector3(position, 0.01f, obwidthposition);
+            Vector3 Obposition = new Vector3(position, 0.02f/2, obwidthposition);
 
             // instantiate obstacles
             GameObject go = Instantiate(target, Obposition, Quaternion.identity) as GameObject;
