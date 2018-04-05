@@ -6,6 +6,7 @@ public class Randomplace : MonoBehaviour {
 
     public GameObject prefab;
     public GameObject target;
+    public GameObject pathob;
     public int NumberOfObstacles;    
     private int obheighttoggle;
     private float obstacleheights;
@@ -17,6 +18,7 @@ public class Randomplace : MonoBehaviour {
     private int obappearancepred;
     private int obstyle;
     private int oblight;
+    private int pathwidth;
     private float obheights;
     private float obheights_target;
     private float obwidthposition;
@@ -47,6 +49,7 @@ public class Randomplace : MonoBehaviour {
         lightObject = GameObject.Find("Directional light");
         Debug.Log(lightObject);
         myLight = lightObject.GetComponent<Light>();
+        pathwidth = PlayerPrefs.GetInt("Pathwidth");
 
         // get obstacle negotiation style
         if (obstyle == 1)
@@ -103,18 +106,28 @@ public class Randomplace : MonoBehaviour {
                 obwidthposition = 1.37f;
             }
 
-            // get lighting position
-            if (oblight == 1)
+            // place path obstacle
+            if (pathwidth == 2)
             {
-                myLight.enabled = true;
+                for (int i = 1; i < 30 + 1; i++)
+                {
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;                    
+                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
+                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
+                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
+                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+                }
             }
-            else if (oblight == 2)
+            else if (pathwidth == 3)
             {
-                myLight.enabled = false;
-            }
-            else if (oblight == 3)
-            {
-                myLight.enabled = false;
+                for (int i = 1; i < 30 + 1; i++)
+                {
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
+                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
+                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
+                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+                }
             }
 
             // set position
@@ -187,6 +200,43 @@ public class Randomplace : MonoBehaviour {
                 myLight.enabled = false;
             }
 
+            if (oblight == 1)
+            {
+                myLight.enabled = true;
+            }
+            else if (oblight == 2)
+            {
+                myLight.enabled = false;
+            }
+            else if (oblight == 3)
+            {
+                myLight.enabled = false;
+            }
+
+            // place path obstacle
+            if (pathwidth == 2)
+            {
+                for (int i = 1; i < 30 + 1; i++)
+                {
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
+                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
+                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
+                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+                }
+            }
+            else if (pathwidth == 3)
+            {
+                for (int i = 1; i < 30 + 1; i++)
+                {
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
+                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
+                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
+                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+                }
+            }
+
             // set position
             float position = (Random.Range(-10.0f, -5.1f)) - 10;
             Vector3 Obposition = new Vector3(position, 0.02f/2, obwidthposition);
@@ -244,10 +294,30 @@ public class Randomplace : MonoBehaviour {
                 obdepths_target = 0.1f;
             }
 
+            // place path obstacle
+            if (pathwidth == 2)
+            {
+                for (int i = 1; i < 30 + 1; i++)
+                {
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
+                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
+                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
+                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+                }
+            }
+            else if (pathwidth == 3)
+            {
+                for (int i = 1; i < 30 + 1; i++)
+                {
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
+                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
+                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
+                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+                }
+            }
         }        
-
-        
-
     }
 	
 	// Update is called once per frame

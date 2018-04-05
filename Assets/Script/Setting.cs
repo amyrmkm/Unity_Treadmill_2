@@ -21,6 +21,9 @@ public class Setting : MonoBehaviour
     public Toggle Colorlevel1;
     public Toggle Colorlevel2;
     public Toggle Colorlevel3;
+    public Toggle Pathwidthlevel1;
+    public Toggle Pathwidthlevel2;
+    public Toggle Pathwidthlevel3;
     public Toggle DyPredlevel1;
     public Toggle DyPredlevel2;
     public Toggle DyPredlevel3;
@@ -134,6 +137,20 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObColor", 3);
         }
 
+        // path width toggle
+        if (Pathwidthlevel1.isOn)
+        {
+            PlayerPrefs.SetInt("Pathwidth", 1);
+        }
+        else if (Pathwidthlevel2.isOn)
+        {
+            PlayerPrefs.SetInt("Pathwidth", 2);
+        }
+        else if (Pathwidthlevel3.isOn)
+        {
+            PlayerPrefs.SetInt("Pathwidth", 3);
+        }
+
         // dynamic predictability toggle
         if (DyPredlevel1.isOn)
         {
@@ -223,6 +240,7 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObHeight", 1);
             PlayerPrefs.SetInt("ObHeightnum", Heightvalint);                        
             PlayerPrefs.SetInt("ObColor", 1);
+            PlayerPrefs.SetInt("Pathwidth", 1);
             PlayerPrefs.SetInt("ObDynamicPred", 1);
             PlayerPrefs.SetInt("ObAppearancePred", 1);
             PlayerPrefs.SetInt("Lighting", 1);
@@ -232,6 +250,7 @@ public class Setting : MonoBehaviour
         {            
             PlayerPrefs.SetInt("ObStyle", 2);
             PlayerPrefs.SetInt("ObColor", 1);
+            PlayerPrefs.SetInt("Pathwidth", 1);
             PlayerPrefs.SetInt("ObDynamicPred", 1);
             PlayerPrefs.SetInt("ObAppearancePred", 1);
             PlayerPrefs.SetInt("Lighting", 1);
@@ -242,6 +261,7 @@ public class Setting : MonoBehaviour
         {
             PlayerPrefs.SetInt("ObStyle", 3);
             Heightvalint = 12;
+            PlayerPrefs.SetInt("Pathwidth", 1);
             PlayerPrefs.SetInt("ObHeight", 1);
             PlayerPrefs.SetInt("ObHeightnum", Heightvalint);            
             PlayerPrefs.SetInt("ObDynamicPred", 1);
@@ -275,6 +295,7 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObAppearancePred", 1);
             PlayerPrefs.SetInt("Lighting", 1);
             PlayerPrefs.SetInt("DualTask", 2);
+            PlayerPrefs.SetInt("Pathwidth", 2);
 
         }
         else if (Stylelevel2.isOn)
@@ -286,6 +307,7 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("Lighting", 1);
             PlayerPrefs.SetInt("DualTask", 2);
             PlayerPrefs.SetInt("ObDepth", 2);
+            PlayerPrefs.SetInt("Pathwidth", 2);
         }
         else if (Stylelevel3.isOn)
         {
@@ -298,6 +320,7 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("Lighting", 1);
             PlayerPrefs.SetInt("DualTask", 2);
             PlayerPrefs.SetInt("ObDepth", 2);
+            PlayerPrefs.SetInt("Pathwidth", 2);
         }
     }
 
@@ -322,6 +345,7 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObAppearancePred", 3);
             PlayerPrefs.SetInt("Lighting", 2);
             PlayerPrefs.SetInt("DualTask", 3);
+            PlayerPrefs.SetInt("Pathwidth", 3);
         }
         else if (Stylelevel2.isOn)
         {
@@ -332,6 +356,7 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("Lighting", 1);
             PlayerPrefs.SetInt("DualTask", 2);
             PlayerPrefs.SetInt("ObDepth", 3);
+            PlayerPrefs.SetInt("Pathwidth", 3);
         }
         else if (Stylelevel3.isOn)
         {
@@ -345,6 +370,7 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("Lighting", 2);
             PlayerPrefs.SetInt("DualTask", 3);
             PlayerPrefs.SetInt("ObDepth", 3);
+            PlayerPrefs.SetInt("Pathwidth", 3);
         }
     }
 
