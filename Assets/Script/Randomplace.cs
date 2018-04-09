@@ -29,7 +29,7 @@ public class Randomplace : MonoBehaviour {
     private float grayscale;
     private GameObject lightObject;
     private Light myLight;
-
+	private Color lightcolors;
 
     // Use this for initialization
     void Start () {
@@ -46,8 +46,7 @@ public class Randomplace : MonoBehaviour {
         obappearancepred = PlayerPrefs.GetInt("ObAppearancePred");
         obstyle = PlayerPrefs.GetInt("ObStyle");
         oblight = PlayerPrefs.GetInt("Lighting");
-        lightObject = GameObject.Find("Directional light");
-        Debug.Log(lightObject);
+        lightObject = GameObject.Find("Directional light");        
         myLight = lightObject.GetComponent<Light>();
         pathwidth = PlayerPrefs.GetInt("Pathwidth");
 
@@ -106,34 +105,6 @@ public class Randomplace : MonoBehaviour {
                 obwidthposition = 1.37f;
             }
 
-            // place path obstacle
-            if (pathwidth == 2)
-            {
-                for (int i = 1; i < 30 + 1; i++)
-                {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
-                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
-                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
-                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
-                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
-                    path1.transform.parent = GameObject.Find("Objects").transform;
-                    path2.transform.parent = GameObject.Find("Objects").transform;
-                }
-            }
-            else if (pathwidth == 3)
-            {
-                for (int i = 1; i < 30 + 1; i++)
-                {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
-                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
-                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
-                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
-                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
-                    path1.transform.parent = GameObject.Find("Objects").transform;
-                    path2.transform.parent = GameObject.Find("Objects").transform;
-                }
-            }
-
             // set position
             float position = (Random.Range(-10.0f, -5.1f)) - 10;
             Vector3 Obposition = new Vector3(position, obheights / 2f, obwidthposition);
@@ -188,57 +159,6 @@ public class Randomplace : MonoBehaviour {
             else if (obwidth == 3)
             {
                 obwidthposition = 1.37f;
-            }
-
-            // get lighting position
-            if (oblight == 1)
-            {
-                myLight.enabled = true;
-            }
-            else if (oblight == 2)
-            {
-                myLight.enabled = false;
-            }
-            else if (oblight == 3)
-            {
-                myLight.enabled = false;
-            }
-
-            if (oblight == 1)
-            {
-                myLight.enabled = true;
-            }
-            else if (oblight == 2)
-            {
-                myLight.enabled = false;
-            }
-            else if (oblight == 3)
-            {
-                myLight.enabled = false;
-            }
-
-            // place path obstacle
-            if (pathwidth == 2)
-            {
-                for (int i = 1; i < 30 + 1; i++)
-                {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
-                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
-                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
-                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
-                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
-                }
-            }
-            else if (pathwidth == 3)
-            {
-                for (int i = 1; i < 30 + 1; i++)
-                {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
-                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
-                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
-                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
-                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
-                }
             }
 
             // set position
@@ -298,30 +218,63 @@ public class Randomplace : MonoBehaviour {
                 obdepths_target = 0.1f;
             }
 
-            // place path obstacle
-            if (pathwidth == 2)
-            {
-                for (int i = 1; i < 30 + 1; i++)
-                {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
-                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
-                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
-                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
-                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
-                }
-            }
-            else if (pathwidth == 3)
-            {
-                for (int i = 1; i < 30 + 1; i++)
-                {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
-                    Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
-                    Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
-                    GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
-                    GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
-                }
-            }
-        }        
+            
+        }
+
+		// place path obstacle
+		if (pathwidth == 2)
+		{
+			for (int i = 1; i < 30 + 1; i++)
+			{
+				float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
+				Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
+				Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
+				GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
+				GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+				path1.transform.parent = GameObject.Find("Objects").transform;
+				path2.transform.parent = GameObject.Find("Objects").transform;
+			}
+		}
+		else if (pathwidth == 3)
+		{
+			for (int i = 1; i < 30 + 1; i++)
+			{
+				float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
+				Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
+				Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
+				GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
+				GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+				path1.transform.parent = GameObject.Find("Objects").transform;
+				path2.transform.parent = GameObject.Find("Objects").transform;
+			}
+		}
+
+		// get lighting position
+		if (oblight == 1)
+		{
+			myLight.enabled = true;
+		}
+		else if (oblight == 2)
+		{
+			//myLight.enabled = false;
+			lightcolors.r = 0.4f;
+			lightcolors.g = 0.4f;
+			lightcolors.b = 0.4f;
+			lightcolors = new Color (lightcolors.r, lightcolors.g, lightcolors.b, 1);
+			myLight.color = lightcolors;
+
+		}
+		else if (oblight == 3)
+		{
+			//myLight.enabled = false;
+			lightcolors.r = 0.4f;
+			lightcolors.g = 0.4f;
+			lightcolors.b = 0.4f;
+			lightcolors = new Color (lightcolors.r, lightcolors.g, lightcolors.b, 1);
+			myLight.color = lightcolors;
+		}
+
+		// dual task
     }
 	
 	// Update is called once per frame

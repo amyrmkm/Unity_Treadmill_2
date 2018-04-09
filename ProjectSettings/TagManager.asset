@@ -13,6 +13,7 @@ TagManager:
   - hospital
   - target
   - indicator_target
+  - Pathobstacle
   layers:
   - Default
   - TransparentFX

@@ -355,7 +355,7 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObColor", 3);
             PlayerPrefs.SetInt("ObDynamicPred", 1);
             PlayerPrefs.SetInt("ObAppearancePred", 3);
-            PlayerPrefs.SetInt("Lighting", 1);
+            PlayerPrefs.SetInt("Lighting", 2);
             PlayerPrefs.SetInt("DualTask", 2);
             PlayerPrefs.SetInt("ObDepth", 3);
             PlayerPrefs.SetInt("Pathwidth", 3);

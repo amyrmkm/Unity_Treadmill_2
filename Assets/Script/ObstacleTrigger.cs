@@ -45,7 +45,7 @@ public class ObstacleTrigger : MonoBehaviour {
     private float timer;
     private float timer_destroy;
     public float speed;
-    
+	public float movetime;    
 
     void Start()
     {
@@ -217,7 +217,7 @@ public class ObstacleTrigger : MonoBehaviour {
         {
             for (int i = 1; i < Nums + 1; i++)
             {
-                obwidthposition = (Random.Range(0.64f, 2.14f));
+				obwidthposition = (Random.Range(0.94f, 1.94f));
                 Obwidth.Add(obwidthposition);
             }
         }
@@ -242,18 +242,36 @@ public class ObstacleTrigger : MonoBehaviour {
         if (obappearancepred == 1)
         {
             timer = 0.0f;
+			timer_destroy = speed*10f;
         }
 
         else if (obappearancepred == 2)
         {
-            timer = speed * (4f / speed);
+			timer = speed * (4f / speed);
+			timer_destroy = speed*10f;
         }
 
         else if (obappearancepred == 3)
         {
             timer = 0f;
-            timer_destroy = speed * (4f / speed);
+			timer_destroy = speed * (2f / speed);
         }
+
+		// appearance predictability
+		if (obdynamicpred == 1)
+		{
+			movetime = 0f;
+		}
+
+		else if (obdynamicpred == 2)
+		{
+			movetime = 2f;
+		}
+
+		else if (obdynamicpred == 3)
+		{
+			movetime = 1f;
+		}
 
     }
     
@@ -329,30 +347,15 @@ public class ObstacleTrigger : MonoBehaviour {
             Score++;
             touched_child = 0;
 
-            if (obappearancepred == 1 | obappearancepred == 2)
-            {
-                StartCoroutine(PlaceObstacle(timer));
-            }
-            else if (obappearancepred == 3)
-            {
-                StartCoroutine(PlaceObstacle(timer));
-                StartCoroutine(PlaceObstacle_disable(timer_destroy));
-            }
+			StartCoroutine(PlaceObstacle(timer, timer_destroy, movetime));
         }
 
         if (touched_child >= 2 && played_sound == true)
         {
             played_sound = false;
             touched_child = 0;
-            if (obappearancepred == 1 | obappearancepred == 2)
-            {
-                StartCoroutine(PlaceObstacle(timer));
-            }
-            else if (obappearancepred == 3)
-            {
-                StartCoroutine(PlaceObstacle(timer));
-                StartCoroutine(PlaceObstacle_disable(timer_destroy));
-            }
+
+			StartCoroutine(PlaceObstacle(timer, timer_destroy, movetime));
         }
 
         if (touched_child_target >= 2 && played_sound == false)
@@ -360,7 +363,7 @@ public class ObstacleTrigger : MonoBehaviour {
             audioSource.clip = failedClip;
             audioSource.Play();
             touched_child_target = 0;
-            StartCoroutine(PlaceTarget(timer));
+			StartCoroutine(PlaceTarget(timer, timer_destroy));
 
         }
 
@@ -368,12 +371,12 @@ public class ObstacleTrigger : MonoBehaviour {
         {
             played_sound = false;
             touched_child_target = 0;
-            StartCoroutine(PlaceTarget(timer));
+			StartCoroutine(PlaceTarget(timer, timer_destroy));
         }
 
     }
 
-    IEnumerator PlaceObstacle(float waitTime)
+	IEnumerator PlaceObstacle(float waitTime, float destroytime, float movetime)
     {
         yield return new WaitForSeconds(waitTime);
         if (i < Nums)
@@ -403,18 +406,20 @@ public class ObstacleTrigger : MonoBehaviour {
 
             // put it under the parent object
             go.transform.parent = GameObject.Find("Objects").transform;
+
+			// move the object
+			go.transform.position = Vector3.Lerp(new Vector3(0.5f,0,0),new Vector3(-0.5f,0,0),Mathf.PingPong(Time.time*movetime, 2.0f));
+
+			// destory the object after a certain time
+			yield return new WaitForSeconds(destroytime);
+			go.GetComponent<MeshRenderer>().enabled = false; // not working
+
             i++;
 
         }
     }
 
-    IEnumerator PlaceObstacle_disable(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        go.GetComponent<MeshRenderer>().enabled = false; // not working
-    }
-
-    IEnumerator PlaceTarget(float waitTime)
+	IEnumerator PlaceTarget(float waitTime, float destroytime)
     {
         yield return new WaitForSeconds(waitTime);
         if (i < Nums)
@@ -442,8 +447,11 @@ public class ObstacleTrigger : MonoBehaviour {
 
             // put it under the parent object
             go.transform.parent = GameObject.Find("Objects").transform;
-            i++;
 
+			yield return new WaitForSeconds(destroytime);
+			go.GetComponent<MeshRenderer>().enabled = false; // not working
+
+            i++;
         }
     }
 }
