@@ -322,6 +322,8 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObDepth", 2);
             PlayerPrefs.SetInt("Pathwidth", 2);
         }
+
+        SceneManager.LoadScene(sceneName);
     }
 
     public void Hard(int sceneName)
@@ -372,6 +374,8 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObDepth", 3);
             PlayerPrefs.SetInt("Pathwidth", 3);
         }
+
+        SceneManager.LoadScene(sceneName);
     }
 
     public void OnSubmit(int sceneName)

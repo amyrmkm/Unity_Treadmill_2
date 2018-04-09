@@ -111,22 +111,26 @@ public class Randomplace : MonoBehaviour {
             {
                 for (int i = 1; i < 30 + 1; i++)
                 {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;                    
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
                     Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
                     Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
                     GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
                     GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+                    path1.transform.parent = GameObject.Find("Objects").transform;
+                    path2.transform.parent = GameObject.Find("Objects").transform;
                 }
             }
             else if (pathwidth == 3)
             {
                 for (int i = 1; i < 30 + 1; i++)
                 {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
                     Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
                     Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
                     GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
                     GameObject path2 = Instantiate(pathob, pathposition2, Quaternion.identity) as GameObject;
+                    path1.transform.parent = GameObject.Find("Objects").transform;
+                    path2.transform.parent = GameObject.Find("Objects").transform;
                 }
             }
 
@@ -218,7 +222,7 @@ public class Randomplace : MonoBehaviour {
             {
                 for (int i = 1; i < 30 + 1; i++)
                 {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
                     Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
                     Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
                     GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
@@ -229,7 +233,7 @@ public class Randomplace : MonoBehaviour {
             {
                 for (int i = 1; i < 30 + 1; i++)
                 {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
                     Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
                     Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
                     GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
@@ -299,7 +303,7 @@ public class Randomplace : MonoBehaviour {
             {
                 for (int i = 1; i < 30 + 1; i++)
                 {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
                     Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.5f);
                     Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.3f);
                     GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
@@ -310,7 +314,7 @@ public class Randomplace : MonoBehaviour {
             {
                 for (int i = 1; i < 30 + 1; i++)
                 {
-                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 10;
+                    float path_positionx = (Random.Range(-10.0f, -5.1f)) - 15 * i;
                     Vector3 pathposition1 = new Vector3(path_positionx, 0.75f, 2.1f);
                     Vector3 pathposition2 = new Vector3(path_positionx, 0.75f, 0.6f);
                     GameObject path1 = Instantiate(pathob, pathposition1, Quaternion.identity) as GameObject;
@@ -323,7 +327,7 @@ public class Randomplace : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
-
+        
     }
             
 }
