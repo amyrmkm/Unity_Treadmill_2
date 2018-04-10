@@ -408,8 +408,8 @@ public class ObstacleTrigger : MonoBehaviour {
             go.transform.parent = GameObject.Find("Objects").transform;
 
 			// move the object
-			go.transform.position = Vector3.Lerp(new Vector3(0.5f,0,0),new Vector3(-0.5f,0,0),Mathf.PingPong(Time.time*movetime, 2.0f));
-
+			//go.transform.position = Vector3.Lerp(new Vector3(0.5f,0,0),new Vector3(-0.5f,0,0),Mathf.PingPong(Time.time*movetime, 2.0f));
+			//go.GetComponent<MoveObstacle>().setting = ??
 			// destory the object after a certain time
 			yield return new WaitForSeconds(destroytime);
 			go.GetComponent<MeshRenderer>().enabled = false; // not working
