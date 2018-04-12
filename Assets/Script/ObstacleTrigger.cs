@@ -254,7 +254,7 @@ public class ObstacleTrigger : MonoBehaviour {
 		else if (obappearancepred == 3)
 		{
 			timer = 0f;
-			timer_destroy = speed * (2f / speed);
+			timer_destroy = speed * (3f / speed);
 		}
 
     }
@@ -428,6 +428,7 @@ public class ObstacleTrigger : MonoBehaviour {
 
 		// instantiate obstacles                
 		GameObject go = Instantiate (targets, Obposition, Quaternion.identity) as GameObject;
+		go.GetComponent<MoveObstacle> ().startpos = Obposition;
 
 		// change color
 		MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer> ();
@@ -442,6 +443,7 @@ public class ObstacleTrigger : MonoBehaviour {
 
 		// put it under the parent object
 		go.transform.parent = GameObject.Find ("Objects").transform;
+		go.GetComponent<MoveObstacle> ().parentpos = go.transform.parent.position;
 
 		yield return new WaitForSeconds (destroytime);
 

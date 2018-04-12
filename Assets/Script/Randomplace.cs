@@ -170,7 +170,7 @@ public class Randomplace : MonoBehaviour {
 
 			// instantiate obstacles
 			GameObject go = Instantiate(target, Obposition, Quaternion.identity) as GameObject;
-
+			go.GetComponent<MoveObstacle> ().startpos = Obposition;
 			// change color
 			MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
 			Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
@@ -184,6 +184,7 @@ public class Randomplace : MonoBehaviour {
 
 			// put it under the parent object
 			go.transform.parent = GameObject.Find("Objects").transform;
+			go.GetComponent<MoveObstacle> ().parentpos = go.transform.parent.position;
 		}
 
 		else if (obstyle == 3)
