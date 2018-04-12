@@ -18,7 +18,16 @@ public class MoveObstacle : MonoBehaviour {
 	{
 		obdynamicpred = PlayerPrefs.GetInt("ObDynamicPred");
 
-		if (obdynamicpred == 2) 
+		if (obdynamicpred == 1) 
+		{
+			for (int i = 1; i < 10; i++) 
+			{
+				timer = 0;
+				movetime.Add (timer);
+			}
+		}
+
+		else if (obdynamicpred == 2) 
 		{
 			for (int i = 1; i < 10; i++) 
 			{

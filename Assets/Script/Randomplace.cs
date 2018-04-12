@@ -47,7 +47,7 @@ public class Randomplace : MonoBehaviour {
 		obappearancepred = PlayerPrefs.GetInt("ObAppearancePred");
 		obstyle = PlayerPrefs.GetInt("ObStyle");
 		oblight = PlayerPrefs.GetInt("Lighting");
-		lightObject = GameObject.Find("Directional light");        
+		lightObject = GameObject.Find("Directional light");  
 		myLight = lightObject.GetComponent<Light>();
 		pathwidth = PlayerPrefs.GetInt("Pathwidth");
 
@@ -171,6 +171,7 @@ public class Randomplace : MonoBehaviour {
 			// instantiate obstacles
 			GameObject go = Instantiate(target, Obposition, Quaternion.identity) as GameObject;
 			go.GetComponent<MoveObstacle> ().startpos = Obposition;
+
 			// change color
 			MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
 			Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
@@ -253,32 +254,38 @@ public class Randomplace : MonoBehaviour {
 			}
 		}
 
+
 		// get lighting position
 		if (oblight == 1)
 		{
-			myLight.enabled = true;
+			lightcolors.r = 1f;
+			lightcolors.g = 1f;
+			lightcolors.b = 1f;
+			lightcolors = new Color (lightcolors.r, lightcolors.g, lightcolors.b, 1);
+			myLight.color = lightcolors;
 		}
+
 		else if (oblight == 2)
 		{
-			//myLight.enabled = false;
-			lightcolors.r = 0.4f;
-			lightcolors.g = 0.4f;
-			lightcolors.b = 0.4f;
-			lightcolors = new Color (lightcolors.r, lightcolors.g, lightcolors.b, 1);
+			lightcolors.r = 159/255f;
+			lightcolors.g = 139/255f;
+			lightcolors.b = 139/255f;
+			lightcolors = new Color (lightcolors.r, lightcolors.g, lightcolors.b, 0.5f);
 			myLight.color = lightcolors;
-
+			Vector3 rotat = new Vector3 (8.312f, -424.44f, -512.85f);
+			myLight.transform.Rotate (rotat);
 		}
+
 		else if (oblight == 3)
 		{
-			//myLight.enabled = false;
-			lightcolors.r = 0.4f;
-			lightcolors.g = 0.4f;
-			lightcolors.b = 0.4f;
-			lightcolors = new Color (lightcolors.r, lightcolors.g, lightcolors.b, 1);
+			lightcolors.r = 159/255f;
+			lightcolors.g = 139/255f;
+			lightcolors.b = 139/255f;
+			lightcolors = new Color (lightcolors.r, lightcolors.g, lightcolors.b, 0.29f);
 			myLight.color = lightcolors;
+			Vector3 rotat = new Vector3 (50.312f, -424.44f, -600.85f);
+			myLight.transform.Rotate (rotat);
 		}
-
-		// dual task
 	}
 
 	// Update is called once per frame

@@ -202,7 +202,7 @@ public class Setting : MonoBehaviour
         {
             PlayerPrefs.SetInt("Lighting", 2);
         }
-        else if (Lightinglevel2.isOn)
+        else if (Lightinglevel3.isOn)
         {
             PlayerPrefs.SetInt("Lighting", 3);
         }
@@ -216,7 +216,7 @@ public class Setting : MonoBehaviour
         {
             PlayerPrefs.SetInt("DualTask", 2);
         }
-        else if (Duallevel2.isOn)
+        else if (Duallevel3.isOn)
         {
             PlayerPrefs.SetInt("DualTask", 3);
         }
