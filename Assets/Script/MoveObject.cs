@@ -7,7 +7,7 @@ public class MoveObject : MonoBehaviour {
     //public float speed;    
     private bool hasStarted = false;
     public GameObject tracker;
-    public float speed;
+    public float speed = 1;
 
     void Start()
     {
