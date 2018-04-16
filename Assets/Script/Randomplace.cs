@@ -51,6 +51,20 @@ public class Randomplace : MonoBehaviour {
 		myLight = lightObject.GetComponent<Light>();
 		pathwidth = PlayerPrefs.GetInt("Pathwidth");
 
+		// get obstacle width
+		if (obwidth == 1)
+		{
+			obwidthposition = (Random.Range(0.64f, 2.14f));
+		}
+		else if (obwidth == 2)
+		{
+			obwidthposition = (Random.Range(0.94f, 1.94f));
+		}
+		else if (obwidth == 3)
+		{
+			obwidthposition = 1.37f;
+		}
+
 		// get obstacle negotiation style
 		if (obstyle == 1)
 		{
@@ -92,20 +106,6 @@ public class Randomplace : MonoBehaviour {
 				altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
 			}
 
-			// get obstacle width
-			if (obwidth == 1)
-			{
-				obwidthposition = (Random.Range(0.64f, 2.14f));
-			}
-			else if (obwidth == 2)
-			{
-				obwidthposition = (Random.Range(0.94f, 1.94f));
-			}
-			else if (obwidth == 3)
-			{
-				obwidthposition = 1.37f;
-			}
-
 			// set position
 			float position = (Random.Range(-10.0f, -5.1f)) - 10;
 			Vector3 Obposition = new Vector3(position, obheights / 2f, obwidthposition);
@@ -113,7 +113,6 @@ public class Randomplace : MonoBehaviour {
 			// instantiate obstacles
 			GameObject go = Instantiate(prefab, Obposition, Quaternion.identity) as GameObject;
 			go.GetComponent<MoveObstacle> ().startpos = Obposition;
-
 
 			// change color
 			MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
@@ -148,20 +147,6 @@ public class Randomplace : MonoBehaviour {
 			else if (obdepth == 3)
 			{
 				obdepths_target = 0.1f;
-			}
-
-			// get obstacle width
-			if (obwidth == 1)
-			{
-				obwidthposition = (Random.Range(0.64f, 2.14f));
-			}
-			else if (obwidth == 2)
-			{
-				obwidthposition = (Random.Range(0.94f, 1.94f));
-			}
-			else if (obwidth == 3)
-			{
-				obwidthposition = 1.37f;
 			}
 
 			// set position
@@ -223,7 +208,28 @@ public class Randomplace : MonoBehaviour {
 				obdepths_target = 0.1f;
 			}
 
+			// set position
+			float position = (Random.Range(-10.0f, -5.1f)) - 10;
+			Vector3 Obposition = new Vector3(position, obheights / 2f, obwidthposition);
 
+			// instantiate obstacles
+			GameObject go = Instantiate(prefab, Obposition, Quaternion.identity) as GameObject;
+			go.GetComponent<MoveObstacle> ().startpos = Obposition;
+
+			// change color
+			MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer>();
+			Material newMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
+			newMaterial.color = altColor;
+			gameObjectRenderer.material = newMaterial;
+
+			// change scale
+			Vector3 scale = go.transform.localScale;
+			scale.Set(obdepths, obheights, obwidthvar);
+			go.transform.localScale = scale;
+
+			// put it under the parent object
+			go.transform.parent = GameObject.Find("Objects").transform;
+			go.GetComponent<MoveObstacle> ().parentpos = go.transform.parent.position;
 		}
 
 		// place path obstacle
@@ -287,11 +293,4 @@ public class Randomplace : MonoBehaviour {
 			myLight.transform.Rotate (rotat);
 		}
 	}
-
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
-
 }

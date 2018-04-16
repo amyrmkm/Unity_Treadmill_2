@@ -45,9 +45,11 @@ public class ObstacleTrigger : MonoBehaviour {
 	private Color altColor_target = new Color(1f, 1f, 1f, 1);
 	private float grayscale;
 
-    public ArrayList Obheight = new ArrayList();
-    public ArrayList Obwidth = new ArrayList();
-    public Color[] Obcolor;
+    private ArrayList Obheight = new ArrayList();
+	private ArrayList Obwidth = new ArrayList();
+	private ArrayList ObOrder_ori = new ArrayList();
+	private ArrayList ObOrder = new ArrayList();
+    private Color[] Obcolor;
 
     void Awake()
     {
@@ -67,6 +69,8 @@ public class ObstacleTrigger : MonoBehaviour {
         obappearancepred = PlayerPrefs.GetInt("ObAppearancePred");
         obstyle = PlayerPrefs.GetInt("ObStyle");
         speed = PlayerPrefs.GetFloat("TreadmillInput") / 2.23694f;
+
+		// step over only ---------------------------------------------------
 
         if (obstyle == 1)
         {
@@ -119,7 +123,6 @@ public class ObstacleTrigger : MonoBehaviour {
                     altColor.b -= grayscale;
                     altColor = new Color(altColor.r, altColor.g, altColor.b, 1);                    
                     Obcolor[i] = altColor;
-
                 }
             }
             else if (obcolor == 3)
@@ -131,11 +134,11 @@ public class ObstacleTrigger : MonoBehaviour {
                     altColor.b = (Random.Range(0f, 1f));
                     altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
                     Obcolor[i] = altColor;
-
                 }
             } 
-
         }
+
+		// step on only ---------------------------------------------------------
 
         else if (obstyle == 2)
         {
@@ -161,9 +164,23 @@ public class ObstacleTrigger : MonoBehaviour {
             }
         }
 
+		// step over or step on mixed --------------------------------------------
+
         else if (obstyle == 3)
         {
-            obheights_target = 0.01f;
+
+			for (int i = 0; i < Nums; i++) {
+				ObOrder_ori [i] = i;			
+			}
+
+			for (int i = 0; i < Nums; i++) {
+				int temp = (int)ObOrder_ori[i];
+				int randomIndex = Random.Range(i, Nums);
+				ObOrder[i] = ObOrder[randomIndex];
+				ObOrder[randomIndex] = temp;
+			}
+
+			obheights_target = 0.01f;
             obdepths = 0.1f;
             altColor = new Color(1, 0, 0, 1);
             altColor_target = altColor_target;
@@ -207,8 +224,9 @@ public class ObstacleTrigger : MonoBehaviour {
             {
                 obdepths_target = 0.1f;
             }
-
         }
+
+		// general variables regardless of negotiation style ------------------------
 
 		// obstacle width manipulation
 		if (obwidth == 1)
@@ -217,9 +235,7 @@ public class ObstacleTrigger : MonoBehaviour {
 			{
 				obwidthposition = (Random.Range(0.94f, 1.94f));
 				Obwidth.Add(obwidthposition);
-
 			}
-
 		}
 		else if (obwidth == 2)
 		{
@@ -256,37 +272,30 @@ public class ObstacleTrigger : MonoBehaviour {
 			timer = 0f;
 			timer_destroy = speed * (3f / speed);
 		}
+    }
+    
 
-    }
-    
-    void Update()
-    {
-        
-    }
-    
+	// When trackers get into the trigger (obstacle or target) --------------------
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "obstacle")
-        {
-            
+        {            
             if (played_sound == false)
             {
 				audioSource.clip = failedClip;
 				audioSource.Play();
                 played_sound = true;                
-            }
-            
+            }            
         }        
         
         if (other.tag == "indicator")
         {
-            touched_child += 1;
-            
+            touched_child += 1;            
         }
 
         if (other.tag == "target")
-        {
-            
+        {            
             if (played_sound == false)
             {
 				audioSource.clip = SuccessClip;
@@ -300,30 +309,31 @@ public class ObstacleTrigger : MonoBehaviour {
         {
             touched_child_target += 1;
         }
-
     }
 
+
+	// When trackers get out of the trigger (obstacle or target) ------------------
+
     void OnTriggerExit(Collider other)
-    {
-       
+    {       
         if (other.tag == "obstacle")
         {
-            Destroy(other.gameObject, 3.0f);
+            Destroy(other.gameObject, 2.0f);
         }
 
         if (other.tag == "target")
         {
-            Destroy(other.gameObject, 3.0f);
+            Destroy(other.gameObject, 2.0f);
         }
 
         if (other.tag == "indicator")
         {
-            Destroy(other.gameObject, 3.0f);
+            Destroy(other.gameObject, 2.0f);
         }
 
         if (other.tag == "indicator_target")
         {
-            Destroy(other.gameObject, 3.0f);
+            Destroy(other.gameObject, 2.0f);
         }
 
         if (touched_child >= 2 && played_sound == false)
@@ -333,9 +343,30 @@ public class ObstacleTrigger : MonoBehaviour {
             Score++;
             touched_child = 0;
 
-			if (i < Nums) {
-				StartCoroutine (PlaceObstacle (timer, timer_destroy));
-				i++;
+			if (obstyle == 1 || obstyle == 2) 
+			{
+				if (i < Nums) {
+					StartCoroutine (PlaceObstacle (timer, timer_destroy));
+					i++;
+				}
+			}
+
+			else if (obstyle == 3)
+			{
+				for (int i = 0; i < Nums; i++) 
+				{
+					int oborderint = (int)ObOrder [i];
+					if (oborderint % 2 == 0) 
+					{
+						StartCoroutine (PlaceObstacle (timer, timer_destroy));
+						i++;
+					} 
+					else if (oborderint % 2 == 1) 
+					{
+						StartCoroutine(PlaceTarget(timer, timer_destroy));
+						i++;
+					}
+				}
 			}
         }
 
@@ -344,9 +375,30 @@ public class ObstacleTrigger : MonoBehaviour {
             played_sound = false;
             touched_child = 0;
 
-			if (i < Nums) {
-				StartCoroutine(PlaceObstacle(timer, timer_destroy));
-				i++;
+			if (obstyle == 1 || obstyle == 2) 
+			{
+				if (i < Nums) {
+					StartCoroutine (PlaceObstacle (timer, timer_destroy));
+					i++;
+				}
+			}
+
+			else if (obstyle == 3)
+			{
+				for (int i = 0; i < Nums; i++) 
+				{
+					int oborderint = (int)ObOrder [i];
+					if (oborderint % 2 == 0) 
+					{
+						StartCoroutine (PlaceObstacle (timer, timer_destroy));
+						i++;
+					} 
+					else if (oborderint % 2 == 1) 
+					{
+						StartCoroutine(PlaceTarget(timer, timer_destroy));
+						i++;
+					}
+				}
 			}
         }
 
@@ -356,11 +408,31 @@ public class ObstacleTrigger : MonoBehaviour {
             audioSource.Play();
             touched_child_target = 0;
 
-			if (i < Nums) {
-				StartCoroutine(PlaceTarget(timer, timer_destroy));
-				i++;
+			if (obstyle == 1 || obstyle == 2) 
+			{
+				if (i < Nums) {
+					StartCoroutine(PlaceTarget(timer, timer_destroy));
+					i++;
+				}
 			}
 
+			else if (obstyle == 3)
+			{
+				for (int i = 0; i < Nums; i++) 
+				{
+					int oborderint = (int)ObOrder [i];
+					if (oborderint % 2 == 0) 
+					{
+						StartCoroutine (PlaceObstacle (timer, timer_destroy));
+						i++;
+					} 
+					else if (oborderint % 2 == 1) 
+					{
+						StartCoroutine(PlaceTarget(timer, timer_destroy));
+						i++;
+					}
+				}
+			}
         }
 
         if (touched_child_target >= 2 && played_sound == true)
@@ -368,13 +440,37 @@ public class ObstacleTrigger : MonoBehaviour {
             played_sound = false;
             touched_child_target = 0;
 
-			if (i < Nums) {
-				StartCoroutine(PlaceTarget(timer, timer_destroy));
-				i++;
+			if (obstyle == 1 || obstyle == 2) 
+			{
+				if (i < Nums) {
+					StartCoroutine(PlaceTarget(timer, timer_destroy));
+					i++;
+				}
+			}
+
+			else if (obstyle == 3)
+			{
+				for (int i = 0; i < Nums; i++) 
+				{
+					int oborderint = (int)ObOrder [i];
+					if (oborderint % 2 == 0) 
+					{
+						StartCoroutine (PlaceObstacle (timer, timer_destroy));
+						i++;
+					} 
+					else if (oborderint % 2 == 1) 
+					{
+						StartCoroutine(PlaceTarget(timer, timer_destroy));
+						i++;
+					}
+				}
 			}
         }
-
     }
+
+
+
+	// function to create obstacles 
 
 	IEnumerator PlaceObstacle(float waitTime, float destroytime)
 	{
@@ -386,11 +482,9 @@ public class ObstacleTrigger : MonoBehaviour {
 		float position = (Random.Range (-10.0f, -5.1f));
 		Vector3 Obposition = new Vector3 (position, obheightvariable / 2f, obwidthvariable);
 
-		// instantiate obstacles
-            
+		// instantiate obstacles            
 		GameObject go = Instantiate (obstacles, Obposition, Quaternion.identity) as GameObject;
 		go.GetComponent<MoveObstacle> ().startpos = Obposition;
-
 
 		// change color
 		MeshRenderer gameObjectRenderer = go.GetComponent<MeshRenderer> ();
@@ -410,16 +504,16 @@ public class ObstacleTrigger : MonoBehaviour {
 		// destory the object after a certain time
 		yield return new WaitForSeconds (destroytime);
 		if (go != null) {			
-			go.GetComponent<MeshRenderer> ().enabled = false; // not working
+			go.GetComponent<MeshRenderer> ().enabled = false; 
 		}
-
 	}
+
+
+	// function to create targets
 
 	IEnumerator PlaceTarget(float waitTime, float destroytime)
 	{
-		yield return new WaitForSeconds (waitTime);
-        
-		//float position = (float)obpos[i];
+		yield return new WaitForSeconds (waitTime);        
 
 		// assign variables                
 		float obwidthvariable = (float)Obwidth [i];
@@ -445,8 +539,8 @@ public class ObstacleTrigger : MonoBehaviour {
 		go.transform.parent = GameObject.Find ("Objects").transform;
 		go.GetComponent<MoveObstacle> ().parentpos = go.transform.parent.position;
 
+		// destory the object after a certain time
 		yield return new WaitForSeconds (destroytime);
-
 		if (go != null) {			
 			go.GetComponent<MeshRenderer> ().enabled = false;
 		}

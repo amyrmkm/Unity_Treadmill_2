@@ -220,7 +220,6 @@ public class Setting : MonoBehaviour
         {
             PlayerPrefs.SetInt("DualTask", 3);
         }
-
     }   
 
     public void Easy(int sceneName)
@@ -356,7 +355,7 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObDynamicPred", 1);
             PlayerPrefs.SetInt("ObAppearancePred", 3);
             PlayerPrefs.SetInt("Lighting", 2);
-            PlayerPrefs.SetInt("DualTask", 2);
+            PlayerPrefs.SetInt("DualTask", 3);
             PlayerPrefs.SetInt("ObDepth", 3);
             PlayerPrefs.SetInt("Pathwidth", 3);
         }
