@@ -167,17 +167,14 @@ public class ObstacleTrigger : MonoBehaviour {
 		// step over or step on mixed --------------------------------------------
 
         else if (obstyle == 3)
-        {
-
+        {			
 			for (int i = 0; i < Nums; i++) {
-				ObOrder_ori [i] = i;			
-			}
-
-			for (int i = 0; i < Nums; i++) {
-				int temp = (int)ObOrder_ori[i];
-				int randomIndex = Random.Range(i, Nums);
-				ObOrder[i] = ObOrder[randomIndex];
-				ObOrder[randomIndex] = temp;
+				int randomIndex = Random.Range(0, Nums);
+                if (ObOrder.Contains(randomIndex))
+                {
+                    randomIndex = Random.Range(0, Nums);
+                }
+                ObOrder.Add(randomIndex);				
 			}
 
 			obheights_target = 0.01f;
