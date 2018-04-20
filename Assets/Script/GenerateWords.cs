@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GenerateWords : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GenerateWords : MonoBehaviour
     string[] ListofWords;    
     List<string> Task = new List<string>();
     private ArrayList order = new ArrayList();
+    private ArrayList ObOrder = new ArrayList();
 
     // Use this for initialization
     void Start()
@@ -17,16 +19,14 @@ public class GenerateWords : MonoBehaviour
         {
             ListofWords = (textFile.text.Split('\n'));
 
-            for (int i = 1; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                int randomIndex = Random.Range(0, 20);
-                order.Add(randomIndex);
+                int randomIndex = Random.Range(0, 20);                
                 if (order.Contains(randomIndex))
                 {
-                    Debug.Log(i);
-                    i -= 1;
-                    Debug.Log(i);
+                    randomIndex = Random.Range(0, 20);
                 }
+                order.Add(randomIndex);
             }
 
             for (int i = 0; i < 5; i++)
@@ -42,7 +42,7 @@ public class GenerateWords : MonoBehaviour
     {
         for (int i = 0; i < Task.Count; i++)
         {
-            GUI.Label(new Rect(100, 100 + (i * 30), 200, 30), Task[i]);
+            GUI.Label(new Rect(0, 0, 100, 100), Task[i]);
         }
     }
 }

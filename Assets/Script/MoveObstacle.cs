@@ -50,7 +50,7 @@ public class MoveObstacle : MonoBehaviour {
 	void Update () 
 	{
 		
-		startpos_continue = new Vector3(startpos.x - parentpos.x, startpos.y, startpos.z);
+		startpos_continue = new Vector3(startpos.x - parentpos.x, startpos.y - parentpos.y, startpos.z - parentpos.z);
 		endpos_continue = new Vector3 (startpos_continue.x + 0.5f, startpos_continue.y, startpos_continue.z);
 
 		int j = 0;

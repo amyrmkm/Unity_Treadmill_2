@@ -7,6 +7,7 @@ public class Randomplace : MonoBehaviour {
 	public GameObject prefab;
 	public GameObject target;
 	public GameObject pathob;
+    public GameObject dualtaskpanel;
 	public int NumberOfObstacles;    
 	private int obheighttoggle = 1;
 	private float obstacleheights;
@@ -18,6 +19,7 @@ public class Randomplace : MonoBehaviour {
 	private int obappearancepred = 1;
 	private int obstyle = 1;
 	private int oblight = 1;
+    private int dualtask = 1;
 	private int pathwidth;
 	private float obheights;
 	private float obheights_target;
@@ -31,9 +33,10 @@ public class Randomplace : MonoBehaviour {
 	private Light myLight;
 	private Color lightcolors;
 	public Vector3 Obposition;
+    public ArrayList ObOrder = new ArrayList();
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
 		NumberOfObstacles = PlayerPrefs.GetInt("NumbOb");
 		obheighttoggle = PlayerPrefs.GetInt("ObHeight");
@@ -50,6 +53,7 @@ public class Randomplace : MonoBehaviour {
 		lightObject = GameObject.Find("Directional light");  
 		myLight = lightObject.GetComponent<Light>();
 		pathwidth = PlayerPrefs.GetInt("Pathwidth");
+        dualtask = PlayerPrefs.GetInt("DualTask");
 
 		// get obstacle width
 		if (obwidth == 1)
@@ -69,9 +73,14 @@ public class Randomplace : MonoBehaviour {
 		if (obstyle == 1)
 		{
 			obdepths = 0.1f;
+            for (int i = 0; i < NumberOfObstacles; i++)
+            {
+                int randomIndex = 0;
+                ObOrder.Add(randomIndex);
+            }
 
-			// get obstacle height
-			if (obheighttoggle == 1)
+            // get obstacle height
+            if (obheighttoggle == 1)
 			{
 				obheights = obstacleheights;
 			}
@@ -134,9 +143,14 @@ public class Randomplace : MonoBehaviour {
 		{
 			obheights = 0.01f;
 			altColor_target = altColor_target;
+            for (int i = 0; i < NumberOfObstacles; i++)
+            {
+                int randomIndex = 1;
+                ObOrder.Add(randomIndex);
+            }
 
-			// get obstacle depth
-			if (obdepth == 1)
+            // get obstacle depth
+            if (obdepth == 1)
 			{
 				obdepths_target = 0.5f;
 			}
@@ -175,9 +189,15 @@ public class Randomplace : MonoBehaviour {
 
 		else if (obstyle == 3)
 		{
-			obheights_target = 0.01f;
+            for (int i = 1; i < NumberOfObstacles; i++)
+            {
+                int randomIndex = Random.Range(0, 2);
+                ObOrder.Add(randomIndex);
+            }
+
+            obheights_target = 0.01f;
 			obdepths = 0.1f;
-			altColor = new Color(1, 0, 0, 1);
+			altColor = new Color(1f, 0f, 0f, 1);
 			altColor_target = altColor_target;
 
 			// get obstacle height
@@ -292,5 +312,16 @@ public class Randomplace : MonoBehaviour {
 			Vector3 rotat = new Vector3 (50.312f, -424.44f, -600.85f);
 			myLight.transform.Rotate (rotat);
 		}
+
+        // dual task
+        if (dualtask == 1 || dualtask == 3)
+        {
+            dualtaskpanel.gameObject.SetActive(false);
+        }
+
+        else
+        {
+            dualtaskpanel.gameObject.SetActive(true);
+        }
 	}
 }

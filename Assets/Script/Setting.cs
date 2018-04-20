@@ -379,7 +379,6 @@ public class Setting : MonoBehaviour
 
     public void OnSubmit(int sceneName)
     {
-        
         Setspeed();
         SetNumber();
         SetHeight();
