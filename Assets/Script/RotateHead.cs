@@ -22,7 +22,6 @@ public class RotateHead : MonoBehaviour {
     public void ResetHead()
     {
         Quaternion rotation = Quaternion.LookRotation(forward, up);
-        Debug.Log("Rotation: " + rotation.eulerAngles.y);
         Quaternion newRotation = new Quaternion();
         newRotation.eulerAngles = new Vector3(cameraRig.transform.rotation.eulerAngles.x, cameraRig.transform.rotation.eulerAngles.y + (rotation.eulerAngles.y - headset.transform.rotation.eulerAngles.y), cameraRig.transform.rotation.eulerAngles.z);
         cameraRig.transform.rotation = newRotation;
