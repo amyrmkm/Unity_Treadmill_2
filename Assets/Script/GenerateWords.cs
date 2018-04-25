@@ -11,6 +11,7 @@ public class GenerateWords : MonoBehaviour
     List<string> Task = new List<string>();
     private ArrayList order = new ArrayList();
     private ArrayList ObOrder = new ArrayList();
+    private GUIStyle guiStyle = new GUIStyle();
 
     // Use this for initialization
     void Start()
@@ -42,7 +43,9 @@ public class GenerateWords : MonoBehaviour
     {
         for (int i = 0; i < Task.Count; i++)
         {
-            GUI.Label(new Rect(0, 0, 100, 100), Task[i]);
+            GUI.contentColor = Color.black;
+            guiStyle.fontSize = 20;
+            GUI.Label(new Rect(47, 617+(i*28), 100, 100), Task[i], "color");
         }
     }
 }
