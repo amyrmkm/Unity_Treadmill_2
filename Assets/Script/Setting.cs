@@ -49,10 +49,12 @@ public class Setting : MonoBehaviour
     public ArrayList heightArray = new ArrayList();
     public ArrayList widthposArray = new ArrayList();
     //private GameObject go;
+    public GameObject settingpanel;
+    public GameObject gamepanel;
 
     void Start()
     {
-        
+        gamepanel.gameObject.SetActive(false);
     }
 
     public void Setspeed()
@@ -222,7 +224,7 @@ public class Setting : MonoBehaviour
         }
     }   
 
-    public void Easy(int sceneName)
+    public void Easy()
     {
         treadmillspeed = float.Parse(speed.text);
         numbObInput = int.Parse(numbOb.text);
@@ -270,10 +272,11 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("ObDepth", 1);
         }
 
-        SceneManager.LoadScene(sceneName);
+        settingpanel.gameObject.SetActive(false);
+        gamepanel.gameObject.SetActive(true);
     }
 
-    public void Medium(int sceneName)
+    public void Medium()
     {
         treadmillspeed = float.Parse(speed.text);
         numbObInput = int.Parse(numbOb.text);
@@ -322,10 +325,11 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("Pathwidth", 2);
         }
 
-        SceneManager.LoadScene(sceneName);
+        settingpanel.gameObject.SetActive(false);
+        gamepanel.gameObject.SetActive(true);
     }
 
-    public void Hard(int sceneName)
+    public void Hard()
     {
         treadmillspeed = float.Parse(speed.text);
         numbObInput = int.Parse(numbOb.text);
@@ -374,16 +378,17 @@ public class Setting : MonoBehaviour
             PlayerPrefs.SetInt("Pathwidth", 3);
         }
 
-        SceneManager.LoadScene(sceneName);
+        settingpanel.gameObject.SetActive(false);
+        gamepanel.gameObject.SetActive(true);
     }
 
-    public void OnSubmit(int sceneName)
+    public void OnSubmit()
     {
         Setspeed();
         SetNumber();
         SetHeight();
-        ActiveToggle();
-        SceneManager.LoadScene(sceneName);
+        ActiveToggle();      
+        settingpanel.gameObject.SetActive(false);
+        gamepanel.gameObject.SetActive(true);        
     }
-
 }
