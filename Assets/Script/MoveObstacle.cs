@@ -14,6 +14,11 @@ public class MoveObstacle : MonoBehaviour {
     private float treadmillspeed;
     private bool hasStarted = false;
 
+    bool isMoving = true;
+    public float minRandStopTime = 1f;
+    public float maxRandStopTime = 2f;
+    float timer = 0;
+    float randStopTime = 0;
     // Use this for initialization
     void Start () 
 	{
@@ -34,15 +39,27 @@ public class MoveObstacle : MonoBehaviour {
 		{
             speed = treadmillspeed * 1.1f;
 		}
-	}
+        randStopTime = Random.Range(minRandStopTime, maxRandStopTime);
+    }
 	
 	// Update is called once per frame
 	void Update () 
-	{		
-		//startpos_continue = new Vector3(startpos.x - parentpos.x, startpos.y - parentpos.y, startpos.z - parentpos.z);
-		//endpos_continue = new Vector3 (startpos_continue.x + 0.5f, startpos_continue.y, startpos_continue.z);		
-        transform.Translate(Vector2.right * Time.deltaTime * speed);
-        Debug.Log(Time.deltaTime);
+	{
+        timer += Time.deltaTime;
+        if(timer > randStopTime)
+        {
+            isMoving = !isMoving;
+            timer = 0;
+            randStopTime = Random.Range(minRandStopTime, maxRandStopTime);
+        }
+        //startpos_continue = new Vector3(startpos.x - parentpos.x, startpos.y - parentpos.y, startpos.z - parentpos.z);
+        //endpos_continue = new Vector3 (startpos_continue.x + 0.5f, startpos_continue.y, startpos_continue.z);		
+        if (isMoving)
+        {
+            transform.Translate(Vector2.right * Time.deltaTime * speed);
+        }
+        
+       // Debug.Log(Time.deltaTime);
         if (obdynamicpred == 3)
         {
             if (Time.deltaTime>0.01)

@@ -52,12 +52,18 @@ public class ObstacleTrigger : MonoBehaviour {
     private Color[] Obcolor;
     private Color[] Obcolor_target;
 
-    void Start()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        randpl = obmanager.GetComponent<Randomplace>();
+    }
 
-		obstacles = randpl.prefab;
+    public void ObstacleTriggerSettingsSubmit()
+    {
+        //hi
+        randpl = obmanager.GetComponent<Randomplace>();
+      
+        obstacles = randpl.prefab;
+       
         targets = randpl.target;
         Oborder = randpl.ObOrder;
         Nums = PlayerPrefs.GetInt("NumbOb");
@@ -72,7 +78,7 @@ public class ObstacleTrigger : MonoBehaviour {
         obstyle = PlayerPrefs.GetInt("ObStyle");
         speed = PlayerPrefs.GetFloat("TreadmillInput") / 2.23694f;
 
-		// step over only ---------------------------------------------------
+        // step over only ---------------------------------------------------
 
         if (obstyle == 1)
         {
@@ -103,7 +109,7 @@ public class ObstacleTrigger : MonoBehaviour {
                     Obheight.Add(obheights);
                 }
             }
-            
+
             // obstacle color manipulation
             Obcolor = new Color[Nums + 1];
 
@@ -123,7 +129,7 @@ public class ObstacleTrigger : MonoBehaviour {
                     altColor.r -= grayscale;
                     altColor.g -= grayscale;
                     altColor.b -= grayscale;
-                    altColor = new Color(altColor.r, altColor.g, altColor.b, 1);                    
+                    altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
                     Obcolor[i] = altColor;
                 }
             }
@@ -137,10 +143,10 @@ public class ObstacleTrigger : MonoBehaviour {
                     altColor = new Color(altColor.r, altColor.g, altColor.b, 1);
                     Obcolor[i] = altColor;
                 }
-            } 
+            }
         }
 
-		// step on only ---------------------------------------------------------
+        // step on only ---------------------------------------------------------
 
         else if (obstyle == 2)
         {
@@ -150,7 +156,7 @@ public class ObstacleTrigger : MonoBehaviour {
             for (int i = 1; i < Nums + 1; i++)
             {
                 Obcolor_target[i] = altColor_target;
-            }            
+            }
 
             if (obdepth == 1)
             {
@@ -166,10 +172,10 @@ public class ObstacleTrigger : MonoBehaviour {
             }
         }
 
-		// step over or step on mixed --------------------------------------------
+        // step over or step on mixed --------------------------------------------
 
         else if (obstyle == 3)
-        {            
+        {
             // color change
             Obcolor = new Color[Nums + 1];
             Obcolor_target = new Color[Nums + 1];
@@ -177,7 +183,7 @@ public class ObstacleTrigger : MonoBehaviour {
             for (int i = 1; i < Nums + 1; i++)
             {
                 altColor = new Color(1f, 0f, 0f, 1);
-                Obcolor[i] = altColor;                
+                Obcolor[i] = altColor;
             }
 
             for (int i = 1; i < Nums + 1; i++)
@@ -210,7 +216,7 @@ public class ObstacleTrigger : MonoBehaviour {
                     Obheight.Add(obheights);
                 }
             }
-                        
+
             // get obstacle depth
             if (obdepth == 1)
             {
@@ -226,56 +232,55 @@ public class ObstacleTrigger : MonoBehaviour {
             }
         }
 
-		// general variables regardless of negotiation style ------------------------
+        // general variables regardless of negotiation style ------------------------
 
-		// obstacle width manipulation
-		if (obwidth == 1)
-		{
-			for (int i = 1; i < Nums + 1; i++)
-			{
-				obwidthposition = (Random.Range(0.94f, 1.94f));
-				Obwidth.Add(obwidthposition);
-			}
-		}
-		else if (obwidth == 2)
-		{
-			for (int i = 1; i < Nums + 1; i++)
-			{
-				obwidthposition = (Random.Range(0.94f, 1.94f));
-				Obwidth.Add(obwidthposition);
-			}
-		}
-		else if (obwidth == 3)
-		{
-			for (int i = 1; i < Nums + 1; i++)
-			{
-				obwidthposition = 1.37f;
-				Obwidth.Add(obwidthposition);
-			}
-		}
+        // obstacle width manipulation
+        if (obwidth == 1)
+        {
+            for (int i = 1; i < Nums + 1; i++)
+            {
+                obwidthposition = (Random.Range(0.94f, 1.94f));
+                Obwidth.Add(obwidthposition);
+            }
+        }
+        else if (obwidth == 2)
+        {
+            for (int i = 1; i < Nums + 1; i++)
+            {
+                obwidthposition = (Random.Range(0.94f, 1.94f));
+                Obwidth.Add(obwidthposition);
+            }
+        }
+        else if (obwidth == 3)
+        {
+            for (int i = 1; i < Nums + 1; i++)
+            {
+                obwidthposition = 1.37f;
+                Obwidth.Add(obwidthposition);
+            }
+        }
 
-		// appearance predictability
-		if (obappearancepred == 1)
-		{
-			timer = 0f;
-			timer_destroy = speed*20f;
-		}
+        // appearance predictability
+        if (obappearancepred == 1)
+        {
+            timer = 0f;
+            timer_destroy = speed * 20f;
+        }
 
-		else if (obappearancepred == 2)
-		{
-			timer = speed * (4f / speed);
-			timer_destroy = speed*20f;
-		}
+        else if (obappearancepred == 2)
+        {
+            timer = speed * (4f / speed);
+            timer_destroy = speed * 20f;
+        }
 
-		else if (obappearancepred == 3)
-		{
-			timer = 0f;
-			timer_destroy = speed * (3f / speed);
-		}
+        else if (obappearancepred == 3)
+        {
+            timer = 0f;
+            timer_destroy = speed * (3f / speed);
+        }
     }
-    
 
-	// When trackers get into the trigger (obstacle or target) --------------------
+    // When trackers get into the trigger (obstacle or target) --------------------
 
     void OnTriggerEnter(Collider other)
     {

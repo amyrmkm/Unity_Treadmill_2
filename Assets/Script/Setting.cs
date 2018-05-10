@@ -391,4 +391,6 @@ public class Setting : MonoBehaviour
         settingpanel.gameObject.SetActive(false);
         gamepanel.gameObject.SetActive(true);        
     }
+
+
 }
