@@ -43,7 +43,13 @@ public class MoveObstacle : MonoBehaviour {
 		//endpos_continue = new Vector3 (startpos_continue.x + 0.5f, startpos_continue.y, startpos_continue.z);		
         transform.Translate(Vector2.right * Time.deltaTime * speed);
         Debug.Log(Time.deltaTime);
-        
+        if (obdynamicpred == 3)
+        {
+            if (Time.deltaTime>0.01)
+            {
+                transform.Translate(Vector2.right * Time.deltaTime * 0);
+            }
+        }
     }
 }
 
