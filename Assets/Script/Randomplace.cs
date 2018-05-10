@@ -27,7 +27,7 @@ public class Randomplace : MonoBehaviour
     private float obwidthposition;
     private float obdepths;
     private float obdepths_target;
-    private Color altColor = new Color(1f, 1f, 1f, 1);
+    private Color altColor = new Color(1f, 0f, 0f, 1);
     private Color altColor_target = new Color(1f, 1f, 1f, 1);
     private float grayscale;
     private GameObject lightObject;
@@ -40,7 +40,7 @@ public class Randomplace : MonoBehaviour
     // Use this for initialization
     public void PlaceObstacle()
     {
-        Debug.Log("clicked");
+        
         NumberOfObstacles = PlayerPrefs.GetInt("NumbOb");
         obheighttoggle = PlayerPrefs.GetInt("ObHeight");
         obstacleheights = PlayerPrefs.GetInt("ObHeightnum");

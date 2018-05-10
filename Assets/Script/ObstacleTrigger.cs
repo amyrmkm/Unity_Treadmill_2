@@ -16,6 +16,7 @@ public class ObstacleTrigger : MonoBehaviour {
     private int Nums;
     private GameObject go;
 	private int i = 1;
+    private int currentnumber = 1;
 
     static int touched_child = 0;
     static int touched_child_target = 0;
@@ -41,7 +42,7 @@ public class ObstacleTrigger : MonoBehaviour {
 	public float speed;
 	public float movetime;    
 
-    private Color altColor =  new Color(1f, 1f, 1f, 1);
+    private Color altColor =  new Color(1f, 0f, 0f, 1);
 	private Color altColor_target = new Color(1f, 1f, 1f, 1);
 	private float grayscale;
 
@@ -51,15 +52,15 @@ public class ObstacleTrigger : MonoBehaviour {
     private Color[] Obcolor;
     private Color[] Obcolor_target;
 
-    void Awake()
+    void Start()
     {
         audioSource = GetComponent<AudioSource>();
         randpl = obmanager.GetComponent<Randomplace>();
 
 		obstacles = randpl.prefab;
         targets = randpl.target;
-		Nums = randpl.NumberOfObstacles;
         Oborder = randpl.ObOrder;
+        Nums = PlayerPrefs.GetInt("NumbOb");
         obheighttoggle = PlayerPrefs.GetInt("ObHeight");
         obstacleheights = PlayerPrefs.GetInt("ObHeightnum");
         obstacleheights = obstacleheights * 0.01f;
@@ -256,7 +257,7 @@ public class ObstacleTrigger : MonoBehaviour {
 		// appearance predictability
 		if (obappearancepred == 1)
 		{
-			timer = 0.0f;
+			timer = 0f;
 			timer_destroy = speed*20f;
 		}
 
@@ -284,7 +285,8 @@ public class ObstacleTrigger : MonoBehaviour {
             {
 				audioSource.clip = failedClip;
 				audioSource.Play();
-                played_sound = true;                
+                played_sound = true;
+                touched_child += 1;
             }            
         }        
         
@@ -300,6 +302,7 @@ public class ObstacleTrigger : MonoBehaviour {
 				audioSource.clip = SuccessClip;
 				audioSource.Play();
                 played_sound = true;
+                touched_child_target += 1;
             }
             Score++;
         }
@@ -317,7 +320,7 @@ public class ObstacleTrigger : MonoBehaviour {
     {       
         if (other.tag == "obstacle")
         {
-            Destroy(other.gameObject, 2.0f);
+            Destroy(other.gameObject, 2.0f);           
         }
 
         if (other.tag == "target")
@@ -342,18 +345,18 @@ public class ObstacleTrigger : MonoBehaviour {
             Score++;
             touched_child = 0;
 
-            if (i < Nums)
+            if (currentnumber < Nums)
             {
-                int oborderint = (int)Oborder[i];
+                int oborderint = (int)Oborder[currentnumber];
                 if (oborderint == 0)
                 {
                     StartCoroutine(PlaceObstacle(timer, timer_destroy));
-                    i++;
+                    currentnumber++;
                 }
                 else if (oborderint == 1)
                 {
                     StartCoroutine(PlaceTarget(timer, timer_destroy));
-                    i++;
+                    currentnumber++;
                 }
             }			
         }
@@ -363,18 +366,18 @@ public class ObstacleTrigger : MonoBehaviour {
             played_sound = false;
             touched_child = 0;
 
-            if (i < Nums)
+            if (currentnumber < Nums)
             {
-                int oborderint = (int)Oborder[i];
+                int oborderint = (int)Oborder[currentnumber];
                 if (oborderint == 0)
                 {
                     StartCoroutine(PlaceObstacle(timer, timer_destroy));
-                    i++;
+                    currentnumber++;
                 }
                 else if (oborderint == 1)
                 {
                     StartCoroutine(PlaceTarget(timer, timer_destroy));
-                    i++;
+                    currentnumber++;
                 }
             }
         }
@@ -385,18 +388,18 @@ public class ObstacleTrigger : MonoBehaviour {
             audioSource.Play();
             touched_child_target = 0;
 
-            if (i < Nums)
+            if (currentnumber < Nums)
             {
-                int oborderint = (int)Oborder[i];
+                int oborderint = (int)Oborder[currentnumber];
                 if (oborderint == 0)
                 {
                     StartCoroutine(PlaceObstacle(timer, timer_destroy));
-                    i++;
+                    currentnumber++;
                 }
                 else if (oborderint == 1)
                 {
                     StartCoroutine(PlaceTarget(timer, timer_destroy));
-                    i++;
+                    currentnumber++;
                 }
             }
         }
@@ -406,18 +409,18 @@ public class ObstacleTrigger : MonoBehaviour {
             played_sound = false;
             touched_child_target = 0;
 
-            if (i < Nums)
+            if (currentnumber < Nums)
             {
-                int oborderint = (int)Oborder[i];
+                int oborderint = (int)Oborder[currentnumber];
                 if (oborderint == 0)
                 {
                     StartCoroutine(PlaceObstacle(timer, timer_destroy));
-                    i++;
+                    currentnumber++;
                 }
                 else if (oborderint == 1)
                 {
                     StartCoroutine(PlaceTarget(timer, timer_destroy));
-                    i++;
+                    currentnumber++;
                 }
             }
         }
